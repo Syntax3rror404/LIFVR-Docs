@@ -207,10 +207,10 @@ it gives access to the following events:
     - OnComponentHardColliding: If UseComponentsHit = True, fires if one of the specified components in the ComponentsNameArray is hard colliding (above hard collision threshold) | outputs: Other Actor = other actor with which the component is colliding, Colliding Component = Component of this actor which causes the collision event to fire, Current Collision Strength = Strength of the collision impact
     - OnComponentCollisionEnded: If UseComponentsHit = True, fires if one of the specified components in the ComponentsNameArray is not colliding anymore | outputs: Component of this actor which has stopped the collision
 
-![CollisionSolverEvents](./Images/CollisionSolver_Events.png)
+![CollisionSolverEvents](./images/CollisionSolver_Events.png)
 **Settings**
 
-![CollisionSolverSettings](./Images/CollisionSolverComp_Settings.png)
+![CollisionSolverSettings](./images/CollisionSolverComp_Settings.png)
 
 **Component Hits**
 
