@@ -10,4 +10,4 @@
 
 
 
-## Further ressources and links
+## Further resources and links
