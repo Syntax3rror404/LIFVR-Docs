@@ -34,6 +34,6 @@ Note: In all LIFVR classes and components, you can find the relevant variables f
 
 ## FAQ
 
-[FAQ](/faq.md)
+[FAQ](/FAQ.md)
 
 ## Further resources and links
