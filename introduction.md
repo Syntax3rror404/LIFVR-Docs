@@ -2,9 +2,9 @@
 
 ## 0. Introduction
 
-LIFVR is a UE5 Plugin for VR Game developers with the intend of a physics based character and interactions in VR (similar to Boneworks/Bonelabs style or the VRGK Plugin of UE4). The core of this framework is written in C++ and most of the functions and classes are accessible through blueprints. **This means you don't need any C++ knowledge to use this plugin.** There are also Blueprint examples with comments to help you and show some applications (see for example: **BP_SimpleGun** or **BP_ExampleDestructible**). If you want a really fast starting point look into the part **1. First Steps** of this documentation.
+LIFVR is a UE5 plugin designed for VR game developers, focusing on physics-based characters and interactions similar to those seen in games like Boneworks and Bonelabs, or the VRGK plugin from UE4. The core of this framework is developed in C++, but most functions and classes are accessible through Blueprints. **This means you don't need any C++ knowledge to use this plugin.** Additionally, there are commented Blueprint examples available to assist you and demonstrate various applications (for instance, `BP_SimpleGun` or `BP_ExampleDestructible`). For a quick start, refer to the section  [**1. Getting Started**](/getting_started.md) in this documentation.      
 
-The Plugin contains the following classes and components:
+The plugin includes the following classes and components:
 
 1. **Core**:
     *   Physics character: BP_HexaCharacter + BP_HexaPhysicsRig
@@ -73,6 +73,6 @@ The Plugin contains the following classes and components:
 5. **Others**:
     *   LuminaVRFunctionlibrary (a function library with useful functions you cann access in blueprints directly)
 
-**Note**: At the moment there is no full body avatar, but that as well as teleportation and a stabbing system will be the next features to be implemented in the framework.
+**Note**: At the moment, there is no full body avatar, but that, along with teleportation and a stabbing system, will be the next features to be implemented in the framework.
 
 The most important classes and components will be explained in more detail in the main part of this documentation.
