@@ -18,7 +18,7 @@ Note: In all LIFVR classes and components, you can find the relevant variables f
 
 4. [Grabbing and Interactions with objects](/interactions.md)
 
-5. [Collision profiles, physical materials, impact effect component](/impact-effects.md)
+5. [Collision profiles, physical materials, impact effect component](/impact_effects.md)
 
 6. [Destructibles](/destructibles.md)
 
