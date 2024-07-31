@@ -4,9 +4,11 @@
 
 ## Table of contents
 
-1. [Introduction.md](/introduction.md)
+0. [Introduction](/introduction.md)
 
+1. [Getting Started](/getting_started.md)
 
+2. [LIFVR Character](/character.md)
 
 
 

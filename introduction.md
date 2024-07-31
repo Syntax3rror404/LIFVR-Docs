@@ -81,7 +81,7 @@ The Plugin contains the following classes and components:
 
 The most important classes and components will be explained in more detail in the main part of this documentation.
 
-## 1. First Steps
+## 1. Getting Started
 
 1. Enable this plugin in your Unreal Engine project under Plugins -> LuminaInteractionFrameworkVR (You will have to restart the engine after this).
 2. Paste the predefined default project settings from the discord server to replace you're project settings. This will ensure you have the physical materials setup coorectly in your project and also start with default VR settings.
