@@ -1,8 +1,8 @@
 # Lumina Interaction Framework VR (LIFVR) Documentation
 
-Welcome in the LIFVR documentation. This contains the basic information of the functions and classes as well as tips, tricks and recommondations how to work with the LIFVR Plugin. The C++ Api dokumentation see will come soon.
+Welcome to the LIFVR documentation. Here, you'll find basic information about functions and classes, along with tips, tricks, and recommendations for working with the LIFVR Plugin. The C++ API documentation will be available soon.
 
-<span style="color: #FF6666 ;">Note: In all LIFVR classes and components you can find the relevant variables to change, customize and configure under the category: **Settings**. So you can easily find them by clicking on the actor or component you want to configure and search in the details panel for 'settings'.</span>
+<span style="color: #FF6666 ;">Note: In all LIFVR classes and components, you can find the relevant variables for customization and configuration under the category Settings. Simply click on the actor or component you wish to configure and search for 'settings' in the details panel.</span>
 
 ## 0. Introduction
 
@@ -100,7 +100,7 @@ It's recommended to use one of the hand classes:
 
 - (Experimental: The class BP_VRPhysicsControlHand is still experimental and not finished / stable yet!)
 
-## 2. Physics Hexa Character
+## 2. LIFVR Character
 
 ### 2.1 Character hierarchy and structure
 The base class for the Hexa Character is the **<span style="color: #ADD8E6;">VRControllerCharacter</span>**. This class handles all inputs (enhanced input actions, mapping context).
@@ -200,12 +200,21 @@ This component handles more complex collisions between actors, like "soft/normal
 
 it gives access to the following events:
 
-    - OnActorColliding: Fires continously as long the actor collides ("soft/normal") 
-    - OnActorHardColliding: Fires once each time the collision strenth is higher than the `HardCollisionTheshold`.
-    - OnCollisionEnded: Fires once if the actor is not colliding anymore
-    - OnComponentColliding: If UseComponentsHit = True, fires if one of the specified components in the ComponentsNameArray is colliding
-    - OnComponentHardColliding: If UseComponentsHit = True, fires if one of the specified components in the ComponentsNameArray is hard colliding (above hard collision threshold) | outputs: Other Actor = other actor with which the component is colliding, Colliding Component = Component of this actor which causes the collision event to fire, Current Collision Strength = Strength of the collision impact
-    - OnComponentCollisionEnded: If UseComponentsHit = True, fires if one of the specified components in the ComponentsNameArray is not colliding anymore | outputs: Component of this actor which has stopped the collision
+| Event Category          | Event Name                   | Description                                                                      | Outputs                                                                                     |
+|-------------------------|------------------------------|----------------------------------------------------------------------------------|---------------------------------------------------------------------------------------------|
+| **Actor Collisions**    | **On Actor Colliding**       | Continuously fires as long as the actor collides (soft/normal).                  | - Other Actor<br>- Current Collision Strength                                                |
+|                         | **On Actor Hard Colliding**  | Fires once each time the collision strength exceeds the `HardCollisionThreshold`.| - Other Actor<br>- Current Collision Strength                                                |
+|                         | **On Collision Ended**       | Fires once when the actor is no longer colliding.                                | None                                                                                        |
+| **Component Collisions**| **On Component Colliding**   | Fires if a specified component in `ComponentsNameArray` is colliding, when `UseComponentsHit = True`. | - Other Actor<br>- Colliding Component<br>- Current Collision Strength                      |
+|                         | **On Component Hard Colliding** | Fires if a specified component in `ComponentsNameArray` is hard colliding (above hard collision threshold), when `UseComponentsHit = True`. | - Other Actor<br>- Colliding Component<br>- Current Collision Strength                      |
+|                         | **On Component Collision Ended** | Fires if a specified component in `ComponentsNameArray` is no longer colliding, when `UseComponentsHit = True`. | - Colliding Component                                                                       |
+
+**Output description**
+
+- **Other Actor**: The other actor involved in the collision. This output identifies which actor is colliding with the subject actor or component.
+- **Colliding Component**: The component of this actor that triggers the collision event. This is particularly useful for understanding which part of the actor is involved in the collision.
+- **Current Collision Strength**: Indicates the intensity of the collision at the moment of the event. Higher values represent stronger impacts.
+- **Colliding Component (On Component Collision Ended)**: Specifies which component of the actor has stopped colliding, providing clarity on which part of the interaction has concluded.
 
 ![CollisionSolverEvents](./images/CollisionSolver_Events.png)
 **Settings**
@@ -269,4 +278,4 @@ how to use them ...
 
 # FAQ
 
-# Further information ressources
+# Further ressources
