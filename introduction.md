@@ -1,9 +1,5 @@
 # Lumina Interaction Framework VR (LIFVR) Documentation
 
-Welcome to the LIFVR documentation. Here, you'll find basic information about functions and classes, along with tips, tricks, and recommendations for working with the LIFVR Plugin. The C++ API documentation will be available soon.
-
-<span style="color: #FF6666 ;">Note: In all LIFVR classes and components, you can find the relevant variables for customization and configuration under the category Settings. Simply click on the actor or component you wish to configure and search for 'settings' in the details panel.</span>
-
 ## 0. Introduction
 
 LIFVR is a UE5 Plugin for VR Game developers with the intend of a physics based character and interactions in VR (similar to Boneworks/Bonelabs style or the VRGK Plugin of UE4). The core of this framework is written in C++ and most of the functions and classes are accessible through blueprints. **This means you don't need any C++ knowledge to use this plugin.** There are also Blueprint examples with comments to help you and show some applications (see for example: **BP_SimpleGun** or **BP_ExampleDestructible**). If you want a really fast starting point look into the part **1. First Steps** of this documentation.
