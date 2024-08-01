@@ -44,9 +44,13 @@ enum class EVRMovementState : uint8
 
 You can access them in the character by dragging in the LuminaVRMovementComponent reference and using the function `LuminaVRMovementComponent->GetMovementState()`.
 
-In the details panel of the **LuminaVRMovementComponent** within the BP_HexaCharacter under the category **Settings**, you can configure essentially everything about the Hexa Physics Character, such as walking, sprinting, swimming speed, jump strength, crouch speed, and many more. Below is a table providing an overview of the variables for the different movement states.
-
 <img src="./images/MovementState.png" style="width: 50%;">
+
+In the details panel of the **LuminaVRMovementComponent** within the BP_HexaCharacter under the category **Settings**, you can configure essentially everything about the Hexa Physics Character, such as walking, sprinting, swimming speed, jump strength, crouch speed, and many more. 
+
+<img src="./images/LuminaVRMovementCompSettings.png" style="width: 50%;">
+
+Below is a table providing an overview of some of the variables in the settings of the LuminaVRMovementComponent:
 
 There are two main locomotion modes:
 
@@ -62,6 +66,25 @@ For logical jumping, implement an event or override the method:
 - in Blueprint: `LogicalJumping()`
 
 #### Moving 
+
+The character is moving through a locomotion sphere in the Hexa Physics Rig. The input values of the thumbstick are transformed to a torque for the locomotion sphere. The magnitude for the torque is scaled by the speed values, which you can set in the settings of the LuminaVRMovementComponent -> Walking.
+
+<p>
+<img src="./images/LocoSphere.png" style="width: 20%;">
+<img src="./images/WalkingSetting.png" style="width: 65%;">
+</p>
+
+If the character crouches the movement speed is reduced automaticly. 
+
+| Variable               | Description                                           |
+|------------------------|-------------------------------------------------------|
+| **Walking Speed**      | The speed at which the character walks if standing. |
+| **Allow Sprinting**    | A boolean that enables or disables the ability to sprint. |
+| **Sprinting Speed**    | The speed at which the character sprints. |
+| **Use Auto Sprinting Speed** | A boolean setting that, when enabled, allows the system to automatically adjust sprinting speed based on other factors or conditions. |
+| **Crouching Speed Scale**    | A speed factor that is multiplied by the movement speed when auto speed adjustments are made based on the percentage of crouching. |
+
+
 #### Turning 
 #### Climbing
 #### Crouching / TipToe
