@@ -12,6 +12,10 @@ Connect with us and other developers on our community Discord: https://discord.c
 
 ![image](https://img.shields.io/badge/Itch.io-FA5C5C?style=for-the-badge&logo=itchdotio&logoColor=white) https://itch.io/game/edit/2737152
 
+🎮**Buy this framework**
+
+![image](https://img.shields.io/badge/Epic%20Games-313131?style=for-the-badge&logo=Epic%20Games&logoColor=white)
+
 ## This documentation is still work in progress
 
 ## Table of contents
