@@ -10,7 +10,7 @@ Connect with us and other developers on our community Discord: https://discord.c
 
 🎮**Download and play the demo for free!** 
 
-![image](https://img.shields.io/badge/Itch.io-FA5C5C?style=for-the-badge&logo=itchdotio&logoColor=white) https://itch.io/game/edit/2737152
+![image](https://img.shields.io/badge/Itch.io-FA5C5C?style=for-the-badge&logo=itchdotio&logoColor=white) https://luminagameworks.itch.io/lifvr
 
 🎮**Buy this framework**
 
