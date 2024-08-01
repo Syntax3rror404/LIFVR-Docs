@@ -14,11 +14,11 @@ Key characteristics like the body proportions of the Hexa Physics Rig and the He
 
 During calibration, the HMD automatically adjusts the height to match the virtual character height as defined in the data asset. This method is called once at the beginning of play, after the player puts on the headset. Calibration can also be adjusted in the **MainMenu** under **Character** (hold the B button for a few seconds to open the menu). The reference point for the HMD is floor level.
 
-**Note:** If you encounter issues where the HexaPhysicsRig does not initialize correctly, check that your guardian is set up properly and the floor level is tracked accurately.
+> **_NOTE:_** If you encounter issues where the HexaPhysicsRig does not initialize correctly, check that your guardian is set up properly and the floor level is tracked accurately.
 
 Currently, other character features like strength, jump strength, speed, etc., are not automatically adjusted by these proportions. In the future, there will be the possibility to enable automatic physics-based calculations for these features.
 
-!!! Be aware that changes made in the proportions may also change the behavior of the character because everything is physics based !!!
+> **_NOTE:_** If you encounter issues where the HexaPhysicsRig does not initialize correctly, check that your guardian is set up properly and the floor level is tracked accurately. Be aware that changes made in the proportions may also change the behavior of the character because everything is physics based !!!
 
 The second character data asset is the **CrouchConfigDA** in this data asset it's possible to control the positions (height and backward leaning) of the character for the different crouch levels. For each crouch level, you can define where the pelvis should be. Be aware that changes made here may also impact and change the behavior like the jump height, for example, if physical jumping is used. For a customized version, it's recommended to create a child or duplicate of the **DefaultCrouchConfigDA** so that you always have the default one as a backup.
 
