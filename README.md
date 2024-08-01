@@ -4,6 +4,10 @@ Welcome to the LIFVR documentation. Here, you'll find basic information about fu
 
 Note: In all LIFVR classes and components, you can find the relevant variables for customization and configuration under the category Settings. Simply click on the actor or component you wish to configure and search for 'settings' in the details panel.
 
+⛹Join Our Community!
+
+Connect with us and other developers on our community Discord: https://discord.com/invite/eRvhc9ykQV
+
 ## This documentation is still work in progress
 
 ## Table of contents
