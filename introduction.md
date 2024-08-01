@@ -73,6 +73,6 @@ The plugin includes the following classes and components:
 5. **Others**:
     *   LuminaVRFunctionlibrary (a function library with useful functions you cann access in blueprints directly)
 
-**Note**: At the moment, there is no full body avatar, but that, along with teleportation and a stabbing system, will be the next features to be implemented in the framework.
+> **_NOTE:_** If you encounter issues where the HexaPhysicsRig does not initialize correctly, check that your guardian is set up properly and the floor level is tracked accurately. At the moment, there is no full body avatar, but that, along with teleportation and a stabbing system, will be the next features to be implemented in the framework.
 
 The most important classes and components will be explained in more detail in the main part of this documentation.
