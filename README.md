@@ -2,7 +2,7 @@
 
 Welcome to the LIFVR documentation. Here, you'll find basic information about functions and classes, along with tips, tricks, and recommendations for working with the LIFVR Plugin. The C++ API documentation will be available soon.
 
-Note: In all LIFVR classes and components, you can find the relevant variables for customization and configuration under the category Settings. Simply click on the actor or component you wish to configure and search for 'settings' in the details panel.
+> **_NOTE:_** In all LIFVR classes and components, you can find the relevant variables for customization and configuration under the category Settings. Simply click on the actor or component you wish to configure and search for 'settings' in the details panel.
 
 ⛹**Join Our Community!** 
 
