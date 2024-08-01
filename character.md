@@ -46,8 +46,6 @@ You can access them in the character by dragging in the LuminaVRMovementComponen
 
 In the details panel of the **LuminaVRMovementComponent** within the BP_HexaCharacter under the category **Settings**, you can configure essentially everything about the Hexa Physics Character, such as walking, sprinting, swimming speed, jump strength, crouch speed, and many more. Below is a table providing an overview of the variables for the different movement states.
 
-![MovementState](./images/MovementState.png)
-
 <img src="./images/MovementState.png" style="width: 50%;">
 
 There are two main locomotion modes:
