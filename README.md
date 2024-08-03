@@ -48,4 +48,20 @@ Connect with us and other developers on our community Discord: https://discord.c
 
 [FAQ](/FAQ.md)
 
-## Further resources and links
+
+## Legal Notice
+
+**German version:** [Impressum](/impressum.md)
+
+**Company Name:** LuminaGameworks UG (limited liability)  
+**Court of Registration:** Ulm District Court, HRB 748411
+**Adress:** Johann-Stockar-Weg 29, 89075 Ulm, Germany
+
+## Contact
+
+**Email:** info@luminagameworks.com  
+
+## Managing Director
+
+**CEO:** Annette Maria Zapf
+**Responsible for Content:** Annette Maria Zapf

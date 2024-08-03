@@ -42,7 +42,7 @@ enum class EVRMovementState : uint8
 };
 ```
 
-You can access them in the character by dragging in the LuminaVRMovementComponent reference and using the function `LuminaVRMovementComponent->GetMovementState()`.
+You can access them in the character by dragging in the LuminaVRMovementComponent reference and using the function `LuminaVRMovementComponent->GetCurrentMovementState()`.
 
 <img src="./images/MovementState.png" style="width: 50%;">
 
@@ -83,6 +83,8 @@ If the character crouches the movement speed is reduced automaticly.
 | **Sprinting Speed**    | The speed at which the character sprints. |
 | **Use Auto Sprinting Speed** | A boolean setting that, when enabled, allows the system to automatically adjust sprinting speed based on other factors or conditions. |
 | **Crouching Speed Scale**    | A speed factor that is multiplied by the movement speed when auto speed adjustments are made based on the percentage of crouching. |
+
+For logical locomotion mode with logical movement you can set directly the speed while crouching ```LogicalCrouchingSpeed (float)``` and enable automatic sprinting speed changes ```UseLogicalAutoSprintingSpeed (boolean)```. These settings can be found under LuminaVRMovementComponent -> Settings -> Locomotion -> Walking-> Logical.
 
 
 #### Turning 
