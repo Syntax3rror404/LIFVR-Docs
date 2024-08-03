@@ -1,8 +1,8 @@
 # Impressum
 
-**Firmenname:**  Lumina Gameworks UG (haftungsbeschränkt) 
-**Handelsregister:**  Amtsgericht Ulm, HRB 748411  
-**Adresse:**  Johann-Stockar-Weg 29, 89075 Ulm, Deutschland  
+**Firmenname:**  Lumina Gameworks UG (haftungsbeschränkt) <br>
+**Handelsregister:**  Amtsgericht Ulm, HRB 748411<br>  
+**Adresse:**  Johann-Stockar-Weg 29, 89075 Ulm, Deutschland<br>  
 
 ### Kontakt
 
@@ -10,6 +10,5 @@
 
 ### Geschäftsführung
 
-**Vertreten durch:**  Annette Maria Zapf (Geschäftsführerin) 
-
+**Vertreten durch:**  Annette Maria Zapf (Geschäftsführerin)<br> 
 **Inhaltlich Verantwortliche:**  Annette Maria Zapf
