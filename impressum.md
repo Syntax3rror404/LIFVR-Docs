@@ -6,11 +6,11 @@
 
 **Adresse:** Johann-Stockar-Weg 29, 89075 Ulm, Deutschland  
 
-#### Kontakt
+### Kontakt
 
 **E-Mail:** luminagameworks@gmail.com  
 
-#### Geschäftsführung
+### Geschäftsführung
 
 **Vertreten durch:** Annette Maria Zapf (Geschäftsführerin)  
 **Inhaltlich Verantwortliche:** Annette Maria Zapf

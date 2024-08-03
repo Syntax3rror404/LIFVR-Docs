@@ -62,11 +62,11 @@ Connect with us and other developers on our community Discord: https://discord.c
 
 **Adress:** Johann-Stockar-Weg 29, 89075 Ulm, Germany
 
-#### Contact
+### Contact
 
 **Email:** luminagameworks@gmail.com   
 
-#### Managing Director
+### Managing Director
 
 **CEO:** Annette Maria Zapf
 **Responsible for Content:** Annette Maria Zapf
