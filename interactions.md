@@ -23,6 +23,7 @@ it gives access to the following events:
 - **Colliding Component (On Component Collision Ended)**: Specifies which component of the actor has stopped colliding, providing clarity on which part of the interaction has concluded.
 
 ![CollisionSolverEvents](./images/CollisionSolver_Events.png)
+
 **Settings**
 
 ![CollisionSolverSettings](./images/CollisionSolverComp_Settings.png)
