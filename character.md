@@ -22,7 +22,7 @@ The Default Value of this variable is set to **IM_VRCharacterDefault**. This map
 To change the default mapping create your own Input MappContext or change the bindings **IM_VRCharacterDefault**** as you'd like. Msure to setup mappings for each Action (which can be foin the actions folder) as shown**IM_VRCharacterDefault**. You can then easassign your Mapping Context in the Character BP under category Input to the DefaultMappingContext variable.
 
     
-<img src="./images/DefaultMappingContext.png" style="width: 100%; max-width: 300px;">
+<img src="./images/DefaultMappingContext.png" style="width: 40%;">
 
 <img src="./images/DefaultMappingSetting.png" style="width: 90%;">    
 
