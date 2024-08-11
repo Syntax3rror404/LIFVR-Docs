@@ -15,23 +15,15 @@ The VR Controller Character handles the mapping from the enhanced input actions 
 
 **Mapping Context**:
     
-<div style="display: flex; align-items: flex-start;">
-    <div style="flex: 1;">
-        <p>
-            <strong>UInputMappingContext* DefaultMappingContext:</strong> This variable holds the default Mapping Context for the Character. The mapping context maps enhanced input actions like e.g. IA_GrabRight to the VR Controller Inputs e.g. OculusTouch (L) Grip Axis.
-        </p>
-        <p>
-            The Default Value of this variable is set to: <strong>IM_VRCharacterDefault</strong>. This mapping context can be found in the content folder under Plugins/LIFVR Content/Input. You can see the default mapping IM_VRCharacterDefault in the image on the right side.
-        </p>
-        <p>
-            To change the default mapping create your own Input Mapping Context or change the bindings in <strong>IM_VRCharacterDefault</strong> as you'd like. Make sure to setup mappings for each Action (which can be found in the actions folder) as shown in <strong>IM_VRCharacterDefault</strong>. You can then easily assign your Mapping Context in the Character BP under the category Input to the DefaultMappingContext variable.
-        </p>
-    </div>
-    <div>
-        <img src="./images/DefaultMappingContext.png" style="width: 100%; max-width: 300px;">
-    </div>
-</div>
+
+- UInputMappingContext* **DefaultMappingContext**. This variable holds the default Mapping Context fthe Character. The mapping context maps enhanced inpactions like e.g. IA_GrabRight to the VR Controller Inputsg. OculusTouch (L) Grip Axis
+The Default Value of this variable is set to **IM_VRCharacterDefault**. This mapping contecan be found in the content folder under Plugins/LIFContent/Input. You can see the default mappiIM_VRCharacterDefault in the image on the right side.
+
+To change the default mapping create your own Input MappContext or change the bindings **IM_VRCharacterDefault**** as you'd like. Msure to setup mappings for each Action (which can be foin the actions folder) as shown**IM_VRCharacterDefault**. You can then easassign your Mapping Context in the Character BP under category Input to the DefaultMappingContext variable.
+
     
+<img src="./images/DefaultMappingContext.png" style="width: 100%; max-width: 300px;">
+
 <img src="./images/DefaultMappingSetting.png" style="width: 90%;">    
 
 > **_NOTE:_** If you can't find the LIFVR Content in the content browser, you need to enable ```Show Plugin Content``` in the content browser settings (see [FAQ](/FAQ.md)) !
