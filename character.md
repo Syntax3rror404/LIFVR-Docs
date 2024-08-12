@@ -19,7 +19,7 @@ The VR Controller Character handles the mapping from the enhanced input actions 
 - UInputMappingContext* **DefaultMappingContext**. This variable holds the default Mapping Context fthe Character. The mapping context maps enhanced inpactions like e.g. IA_GrabRight to the VR Controller Inputsg. OculusTouch (L) Grip Axis
 The Default Value of this variable is set to **IM_VRCharacterDefault**. This mapping contecan be found in the content folder under Plugins/LIFContent/Input. You can see the default mappiIM_VRCharacterDefault in the image on the right side.
 
-To change the default mapping create your own Input Mapping Context or change the bindings **IM_VRCharacterDefault**** as you'd like. Make sure to setup mappings for each Action (which can be foin the actions folder) as shown **IM_VRCharacterDefault**. You can then easily assign your Mapping Context in the Character BP under the category Input to the DefaultMappingContext variable.
+To change the default mapping create your own Input Mapping Context or change the bindings **IM_VRCharacterDefault**** as you'd like. Make sure to setup mappings for each Action (which can be found in the actions folder) and as as shown in **IM_VRCharacterDefault**. You can then easily assign your Mapping Context in the PB_HexaCharacter (or custom Child Character class) under the category Input to the DefaultMappingContext variable.
 
     
 <img src="./images/DefaultMappingContext.png" style="width: 40%;">
@@ -40,7 +40,7 @@ The actions are the things the character can do, like Crouch, Move or Grab (as y
 - IA_GrabRight, IA_GrabLeft as well as IA_IndexCurl_Right and IA_IndexCurl_Left call the grab methods in the character. In the default setup grabbing is possible with the grab button as well as with the grip button of the vr controller. This enables to have a distiction between loose grabbing (only grabbing with index finger (triggered by IA_IndexCurl_Right/Left)) and normal grabbing (triggered by IA_GrabRight/Left).
 More information about grabbing: [VR Physics Hands](/hands.md).
 
-The actions are bind in the VR Controller Character to the methods:
+The actions are bind in the VR Controller Character to the methods. The following shows a list of the actions their trigger types and the methods they are calling:
 
 | Input Action              | Trigger Event  | Component/Character         | Method                               |
 |---------------------------|----------------|-----------------------------|--------------------------------------|
@@ -95,7 +95,7 @@ You have the oportunity to add logic to the methods by two ways:
 1. Using the predefined events in the BP_HexaCharacter
 2. Adding Input Listeners to the LIFVR Actions 
 
-    This is useful if you want use another trigger which is not already bound in the character, getting access to the raw input values or the predefined events in the character are not enough for you purpose. See for an example the crouch listeners binding in the BP_HexaCharacter. **Note: Adding logic there will not override the base logic/methods bound in C++**.
+    This is useful if you want use other trigger types which are not already bound in the character, getting access to the raw input values or the predefined events in the character are not enough for you purpose. See for an example the crouch listeners binding in the BP_HexaCharacter. **Note: Adding logic there will not override the base logic/methods bound in C++**.
 
 <img src="./images/LocomotionEvents.png" style="width: 100%;">      
 <img src="./images/ButtonInputEvents.png" style="width: 100%;">     
@@ -110,14 +110,15 @@ You have the oportunity to add logic to the methods by two ways:
 
     e.g. OverrideBPress = True
 
-> **_NOTE:_** This will also induce that in interaction points events do't fire anymore.
+> **_NOTE:_** This will also induce that in interaction points this specific event doesn't fire anymore.
 
-    Further it's possible to disable Index Grab (grabbing with trigger button) completely. Note that if you disable this feature you can also not use the other features which depend on loose grabbing! (so this is not recommended)   
+    Further it's possible to disable Index Grab (grabbing with trigger button) completely by setting OverrideIndexGrabRight/Left = True. Note that if you disable this feature you can also not use the other features which depend on loose grabbing! (so this is not recommended).   
 
 ### 2.3 Character Data (Data Assets)
+
 Key characteristics like the body proportions of the Hexa Physics Rig and the Hexa Character are defined by a **CharacterProportionsDA**. This data asset is assigned to the variable `BP_HexaCharacter -> CharacterProportions`. The **DefaultCharacterProportionsDA** is configured to match the proportions of the UE5 Mannequins. You can further customize the character by creating (duplicating the default data asset or creating a child data asset from the class CharacterProportionsDA) your own data asset and assigning it to the variable **CharacterProportions** in the BP_HexaCharacter. In this data asset, you can specify the exact local position of the pelvis or use the LegToBodyRatio. The **Default Character Height** represents the total height of the character in a standing position.
 
-During calibration, the HMD automatically adjusts the height to match the virtual character height as defined in the data asset. This method is called once at the beginplay or after the player puts on the headset. Calibration can also be adjusted in the **MainMenu** under **Character** (hold the B button for a few seconds to open the menu). The reference point for the HMD is floor level.
+During calibration, the HMD automatically adjusts the height to match the virtual character height as defined in the data asset. This method is called once at the beginplay or after the player puts on the headset. Calibration can also be adjusted in the **MainMenu** under **Character** (to open the main menu press the menu button on the controller). The reference point for the HMD is floor level.
 
 > **_NOTE:_** If you encounter issues where the HexaPhysicsRig does not initialize correctly, check that your guardian is set up properly and the floor level is tracked accurately.
 
@@ -128,6 +129,7 @@ Currently, other character features like strength, jump strength, speed, etc., a
 The second character data asset is the **CrouchConfigDA** in this data asset it's possible to control the positions (height and backward leaning) of the character for the different crouch levels. For each crouch level, you can define where the pelvis should be. Be aware that changes made here may also impact and change the behavior like the jump height, for example, if physical jumping is used. For a customized version, it's recommended to create a child or duplicate of the **DefaultCrouchConfigDA** so that you always have the default one as a backup.
 
 ### 2.4 Locomotion: LuminaVRMovementComponent
+
 The locomotion of the character is managed by the **LuminaVRMovementComponent**. This is a completely new component within LIFVR, not a derivative of Epic's movement component.
 
 The Hexa Character has the following **movement states**:
@@ -155,7 +157,15 @@ In the details panel of the **LuminaVRMovementComponent** within the BP_HexaChar
 
 <img src="./images/LuminaVRMovementCompSettings.png" style="width: 50%;">
 
-Below is a table providing an overview of some of the variables in the settings of the LuminaVRMovementComponent:
+In the sections below you can find a more detailed overview of the different variables in the settings of the LuminaVRMovementComponent.
+
+Basicly each movement type like turning, jumping etc. has a variable called bAllow[MovementType] (e.g. bAllowSprinting, bAllowTurning,...). With these you can block or allow them dynamicly in you're gameplay. 
+
+<img src="./images/AllowMethods.png" style="width: 75%;">
+
+Furthermore each movement type has an boolean indicator bIs[MovementType] (e.g. bIsMoving, bIsJumping, etc.) which can be called to check if the movement is currently occuring. This is for gameplay logic useful besides the current movement state because movements can occur simultaneously, like walking and crouching.
+
+<img src="./images/MovementIndicators.png" style="width: 95%;">
 
 There are two main locomotion modes:
 
@@ -166,7 +176,7 @@ The primary features are implemented for the **Physical locomotion mode**, which
 
 The Logical locomotion mode exists for those who prefer to use mainly the VRHands (NOT VRPhysicsHands) and a more logic-driven character. It is recommended to create a child of the ControllerCharacter and enhance or override functions in the LuminaVRMovementComponent to add logic-based locomotion. This mode has only implemented logical movement (see method `MoveLogical(FInputActionValue& Value)`) and turning.
 
-For logical jumping, implement an event or override the method:
+For logical jumping, implement the event or override the method:
 - in C++: `DoLogicalJumping()`
 - in Blueprint: `LogicalJumping()`
 
@@ -186,11 +196,13 @@ If the character crouches the movement speed is reduced automaticly.
 | **Walking Speed**      | The speed at which the character walks if standing. |
 | **Allow Sprinting**    | A boolean that enables or disables the ability to sprint. |
 | **Sprinting Speed**    | The speed at which the character sprints. |
-| **Use Auto Sprinting Speed** | A boolean setting that, when enabled, allows the system to automatically adjust sprinting speed based on other factors or conditions. |
 | **Crouching Speed Scale**    | A speed factor that is multiplied by the movement speed when auto speed adjustments are made based on the percentage of crouching. |
 
 For logical locomotion mode with logical movement you can set directly the speed while crouching ```LogicalCrouchingSpeed (float)``` and enable automatic sprinting speed changes ```UseLogicalAutoSprintingSpeed (boolean)```. These settings can be found under LuminaVRMovementComponent -> Settings -> Locomotion -> Walking-> Logical.
 
+You can access the current speed and velocity vector of the character with the following functions:
+
+<img src="./images/SpeedMethods.png" style="width: 60%;">
 
 #### Turning 
 
@@ -206,24 +218,131 @@ Both turn modes work for the physical locomotion and the logical locomotion (Loc
 The TurnMode can also be changed in game in the main menu in the category **Controls**. There the buttons are bind to change the ``` TurnMode ``` variable in the HexaCharacter.
 
 #### Climbing
+
+Climbing works practically out of the box. Because the hands are physically connected to the character, to enable climbing it's only needed to give the climb able actor a grab tag (grabbing actor settings (see [VR Physics Hands](/hands.md))). Because the physics rig is quite heavy by default to be more stable for climbing it automaticly adjusts the weight to climb more easily. It also automaticly increases the AutoReleaseThreshold of the hands, so that the character does not auto release while climbing that easily. The character can automaticly climb crouch. This is triggered if the character tries to go over a ledge. It's possible to enable ```bAlwaysClimbCrouch``` (can also be set in the main menu: controls). Than it will always crouch when climbing.
+
+> **_NOTE:_** Always climb crouch can be not completely stable, because it has to detect if it's climbing based on the hands state as well if the character touches the ground. So it can happen in a situation that it starts to climb crouch when it's not really desired for. A better way if one wants to use this is to use the optional ```climb tag```. In this way one has precise control in which situations it should automaticly crouch and when not.
+
+**Settings**
+
+<img src="./images/ClimbSettings.png" style="width: 70%;">
+
+
+| Variable                     | Description |
+|------------------------------|-------------|
+| **Use Climb Crouch**         | Enable or disable the automatic climb crouch feature. |
+| **Only Two Handed Climb Crouch** | Define to only trigger climb crouch if currently climbing with both hands grabbing. This is mostly the case if one wants to go over a ledge (will be more reliable). |
+| **ClimbCrouchHeadOffset**    | Defines the vertical offset the head has to be in front of the hands to trigger the climb crouch for going over ledges. -10.0 means the head has only to be slightly above the hands indicating a leaning forward. |
+| **Always Climb Crouch**      | Enable to always crouch when climbing. See the note above for more information. |
+| **Climb Strength**           | Define how easily the character can climb. 1 = most easy climb, 0 = heavy to climb. |
+
+
 #### Crouching / TipToe
+
+The hexa character can crouch and tip toeing. In the default configuration crouching is triggered by pulling the right thumbstick down and tip toe by pulling it up. If the thumbstick is released while tip toe it automaticly goes back to standing height. The crouching is organized into crouch levels. If you release the thumbstick while crouching it will automaticly go to the nearest crouch level height. The following crouch levels exist.
+
+**Crouch Levels**
+
+- **TipToe**
+- **Standing**
+- **SlightCrouch**
+- **MediumCrouch**
+- **DeepCrouch**
+- **MaxCrouch**: This crouch level is normally not allowed and only for jump crouch or climbing over a ledge enabled for better locomotion handling in these situations.
+
+The height and pelvis position for the crouch levels is defined in the Crouch Config data asset: **CrouchConfigDA**. For customized crouch configs you can create a new data asset of this type or duplicate the default crouch config: **DA_DefaultCrouchConfig**. It can be found in the content browser under:
+<img src="./images/CrouchConfigPath.png" style="width: 75%;">
+
+
+**DA_DefaultCrouchConfig**:
+
+<img src="./images/DefaultCrouchConfig.png" style="width: 100%;">
+
+> **_NOTE:_** Changes in the crouch config will affect the physical behavior of the character, because everything is physics based. E.g. leaning more backwards with the pelvis position can lead the character to jump more in the forward direction. So you can try customizations, but it's recommendet to always have the original **DA_DefaultCrouchConfig** as backup.
+
+**Settings**
+
+<img src="./images/CrouchSettings.png" style="width: 85%;">
+
+| Variable                    | Description |
+|-----------------------------|-------------|
+| **AllowCrouching**          | Allow or block crouching with inputs (like thumbstick). Real player crouch will always lead to crouching of the character/HexaPhysicsRig. |
+| **Crouching Speed**         | Defines the speed of the virtual crouching if thumbsticks are used. |
+| **Crouch Config**           | This data asset holds information for the crouch levels, such as the target height of each crouch level and the pelvis position. Changes can affect physical behaviors like jumping. |
+| **Crouch Curve**            | A float curve used for interpolated crouching; it defines the speed for this process. Interpolation crouch mode is used for actions like standing up fast to induce a physical jump. |
+| **Crouch Interpolation Speed** | Defines the interpolation time for crouching via the interpolation mode. |
+| **TipToeMaxOffsetHeight**   | Defines in cm the maximal offset height amount which is added to the standing height (default character height) for Tip Toe. |
+| **Tip Toe Threshold**       | Height value offset which needs to be reached to tip toe if real player tip toes (not with thumbsticks). Useful for some neck freedom without directly starting to tip toe. |
+| **TipToeInputThreshold**    | Deadzone for positive thumbstick axis which triggers tip toe. After 0.2 is reached through the thumbstick input, it will start with tip toe. |
+| **Crouch Dead Zone**        | Deadzone for negative thumbstick axis which triggers crouching. After 0.15 is reached through the thumbstick input, it will start with crouching. |
+
+The dead zones help to prevent to start crouching or tip toe (vertical thumbstick axis) when turning (vertical thumbstick axis), because of precision of the thumbsticks. You can increase the values if you want a higher distinction between these two inputs.
+
+Crouch levels are automaticly adjusted if moving:
+
+1. **Walking from Deeper Crouch Levels:**
+   - If currently in a crouch level deeper than **Medium Crouch** and starting to walk, the crouch level automatically adjusts up to **Medium Crouch**.
+   
+2. **Sprinting from Crouching:**
+   - If currently in a crouch level deeper than slight crouch and starting to sprint, the crouch level automatically adjusts up to **Slight Crouch**.
+
+These auto adjustements can be overriden by the inputs, which is useful to walk under tight gaps for example.
+
+To crouch driven from code logic there are two options:
+
+1. **Interpolation mode**: Use the interpolation mode in the LuminaVRMovementComponent. For this you first need to set ```bUseInterpolationCrouchMode = true```. Afterwards you can call the function ``` SetCrouchLevel(ECrouchLevel NewCrouchLevel)```. This sets a target height for the character based on the crouch level. It's important to implement logic to reset the interpolation mode by ```bUseInterpolationCrouchMode = false``` and calling afterwards ```ResetCrouchLevelOverride()```, because the interpolation mode overrides the target height for the character and the default crouch calculations.
+
+2. **Simulate thumbstick input**: You can call continously (e.g. in a custom timer) the method ```UpdateVirtualCrouchOffsetAdd(Offset)```. This will let the character crouch downwards for offsets > 0.0 and upwards for offsets < 0.0. The speed scales by |offset|. Important it'S important to have a checking condition when the desired height is reached and to stop the loop than. Useful is here e.g. the function ```GetCurrentCrouchPercentage()```. If finished set ```VirtualCrouchOffset = 0.0f``` to immediately stop there. 
+
 #### Swimming
 #### Jumping
 #### Slopes
 
-### 2.3 Default Controls and How to Change Input Mapping (Enhanced Inputs)
-In the picture below, you can see the default input mapping of the Hexa character. [Insert Picture or Provide Link]
+### 2.3 Character collisions
 
 ### 2.4 Motion Sickness Prevention
-The Hexa Character includes a Vignette actor component which can be used to prevent motion sickness. It can be enabled or disabled in the main menu or within the **LuminaVRMovementComponent** (Settings).
+The Hexa Character includes a Vignette child actor component (BP_ViewVignette / AViewVignette (C++)) which can be used to prevent motion sickness. It can be enabled or disabled in the main menu or in the BP_HexaCharacter Settings -> Motion Sickness Prevention -> Vignette.  
 
-Teleportation will be added in the next update.
+<img src="./images/VignetteSettings.png" style="width: 60%;">
+
+**Settings:**
+
+| Variable                          | Description |
+|----------------------------------|-------------|
+| **Enable Vignette**              | Enables or disables the vignette effect for motion sickness prevention. |
+| **Max Vignette Opacity**         | Sets the maximum opacity of the vignette. A higher value makes the vignette more pronounced. |
+| **Vignette Show Transition Time**| Time it takes for the vignette to fully appear once triggered. |
+| **Vignette Hide Transition Time**| Time it takes for the vignette to fully disappear once deactivated. |
+| **Vignette Velocity Threshold**  | Velocity threshold the character needs to move for the vignette to appear. |
+| **Use Ease in Out Vignette**     | Determines whether the vignette transition uses an easing function to appear and disappear (default: linear). |
+
+
+> **_NOTE:_** Teleportation will be added in the next update.
 
 ### 2.5 Slow Motion Mode
-The character features an integrated slow motion mode, similar to what is seen in Bonelabs/Boneworks. By pressing the right thumbstick, this mode can be activated. Quick successive presses can further slow down the time. After a threshold time (variable: `[specify variable]`), which needs to be maintained between the thumbstick presses, another press will deactivate the slow motion. 
+The character features an integrated slow motion mode, similar to what is seen in Bonelabs/Boneworks. By pressing the right thumbstick, this mode can be activated. Quick successive presses can further slow down the time. After a threshold time (variable: `SlowMotionPressThreshold`), which needs to be maintained between the thumbstick presses, another press will deactivate the slow motion.
+
+- Time Dilation > 1.0 : speed up
+- Time Dilation = 1.0 : normal
+- Time Dilation < 1.0 : slow motion
+
+
+**Settings:**
+
+In the details panel of the Hexa Character under Settings -> Slow  Motion, you can find the variables to setup or customize slow motion.
+
+|       Variable                 | Description |
+|--------------------------------|-------------|
+| **bEnableSlowMotion**        | Enable or disable slow motion |
+| **SlowMotionTimeDilation**| Value to multiply the current time dilation with each step the time dilation is increased (e.g. 0.5 means the time dilation is halved with each press). |
+| **Maximaltimedilation**    | Lower bound for the time dilation value. |
+
 
 > **_NOTE:_** Be aware that the slow motion mode can also affect physical calculations.
 
 You can retrieve the current slow motion time dilation for any actor placed in the world by using the node `GetActorTimeDilation`. For example, see how this is implemented for the shooting sound in **BP_SimpleGun**.
 
+In the BP_HexaCharacter or you're custom child character class you can add logic which should happen on slow motion changes by using the event `OnSlowMotionChanged`.
+
+<img src="./images/OnSlowMotionChanged.png" style="width: 30%;">
 
