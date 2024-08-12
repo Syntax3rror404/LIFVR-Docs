@@ -251,7 +251,8 @@ The hexa character can crouch and tip toeing. In the default configuration crouc
 - **MaxCrouch**: This crouch level is normally not allowed and only for jump crouch or climbing over a ledge enabled for better locomotion handling in these situations.
 
 The height and pelvis position for the crouch levels is defined in the Crouch Config data asset: **CrouchConfigDA**. For customized crouch configs you can create a new data asset of this type or duplicate the default crouch config: **DA_DefaultCrouchConfig**. It can be found in the content browser under:
-<img src="./images/CrouchConfigPath.png" style="width: 75%;">
+
+<img src="./images/CrouchConfigPath.png" style="width: 55%;">
 
 
 **DA_DefaultCrouchConfig**:
@@ -294,8 +295,86 @@ To crouch driven from code logic there are two options:
 
 2. **Simulate thumbstick input**: You can call continously (e.g. in a custom timer) the method ```UpdateVirtualCrouchOffsetAdd(Offset)```. This will let the character crouch downwards for offsets > 0.0 and upwards for offsets < 0.0. The speed scales by |offset|. Important it'S important to have a checking condition when the desired height is reached and to stop the loop than. Useful is here e.g. the function ```GetCurrentCrouchPercentage()```. If finished set ```VirtualCrouchOffset = 0.0f``` to immediately stop there. 
 
-#### Swimming
 #### Jumping
+
+In LIFVR are currently two jump types implemented: 
+
+1.) Impulse Jumping
+2.) Physical Jumping
+
+You can define them in the LuminaVRMovement component in the ```EVRJumpingTypes JumpingType``` variable (Settings->Jumping).
+
+> **_Important:_** Both of them need the physical locomotion mode enabled, because they rely on the HexaPhysicsRig.
+
+The jump type Logical Jumping is called if the Logical Locomotion mode is used. This is only thought for users who don'T want to use the HexaPhysicsCharacter, but create their character based on the Controller Character with more logic driven locomotion. For this you need to implement a lot of logic by yourself, like the logical jumping. For this mode only turning and logical moving is currently implemented.
+
+For logical jumping, implement the event or override the method:
+- in C++: `DoLogicalJumping()`
+- in Blueprint: `LogicalJumping()`
+
+**Impulse Jumping**
+
+This jumping type works through adding an upward impulse to the HexaCharacter. It is directly triggered if the IA_Jump action is started. This input action calls the `JumpingStart()` method which then calls for Impulse Jumping the `DoImpulseJumping()` method. In there the **`OnJump`** event is triggered, which you can find in the HexaCharacter event graph.
+
+**Physical Jumping**
+
+In this jumping type the character jumps, because of it's physical properties. The character crouches and stands up rapidly to jump. The physical jumping is ordered into Jumping Stages (`EPhysJumpingStage JumpingStage`).
+
+Jumping stages:
+
+1. **JumpCrouch**
+2. **Jumping**
+3. **InAir**
+4. **Landing**
+
+You can access the current jumping stage by the event `OnPhysicalJumpingStageChanged` in the HexaCharacter or with the getter `GetJumpingStage()` in the LuminaVRMovementComponent.
+
+<img src="./images/JumpingStageEvent.png" style="width: 60%;">
+
+When the IA_Jump action is started it calls the `JumpingStart()` method, which then calls `StartPhysicalJumping()` if not currently already jumping (`bIsJumping`) and jumping is allowed (`bAllowJumping`). Here the **OnJumpingStarted** event fires.
+
+1. **JumpCrouch**: If started the character crouches until it reaches the crouch percentage defined in `JumpCrouchAmount`. It holds this position until the comleted event of the IA_Jump action is triggered. 
+
+2. **Jumping**: Then the method `JumpingStop()` and in there the method `DoPhysicalJumping()` is called. Here the **OnJump** event fires. If the completed event was less than 0.25 seconds of the started event ago then the jump is called with a small delay so that the character has enough time (to the 0.25 seconds) to crouch enough so that lift up is possible for the jump.
+
+3. **InAir**: As soon as the character is lift up of the ground it is in the InAir jumping stage. It's possible to enable `bUseCrouchInAir`, so that the HexaCharacter automaticly tries to crouch while jumping to the target crouch level as specified in `JumpInAirCrouchLevel`. This is useful so that the character can more easily jump on objects with a lower total jump height needed. The `CrouchInAirCirCurve` defines the interpolation to the crouch level. This feature is currently experimental and still work in progress. So it can feel a bit unnatural currently, but will be optimized in the future. Furthermore one can crouch manually with the thumbsticks to crouch.
+
+4. **Landing**: When the HexaCharacter touches the ground again it is in the landing stage. Here it automaticly tries to stand up again, if crouching was used before. A further currently experimental feature is crouch landing (`bUseCrouchLanding`), so the character crouches deeper again when touching the ground. The height for this crouching depends on the force it has to the ground and only is performed if this force is higher than the specified `LandingForceThreshold`. 
+
+After the landing when the interpolation is also done for standinf up the **OnJumpingFinished** Event fires.
+
+> **_Note:_** The Crouch landing also works without jumping before, so for example if falling down.
+
+The landing hit fires the OnLanding event (see BP_HexaCharacter event graph). This does also fire if `bUseCrouchLanding = False`. You can access the entire Hit result, as well as the adjusted impact force and if the landing occured after a jump or not. This is for example useful in gameplay to check if the impact force was to high to kill the character or breaking bones.
+
+<img src="./images/LandingEvent.png" style="width: 60%;">
+
+> **_Note:_** Because this jumping is completely based on physics the character proportions, the crouch configuration and the crouch speed have an impact on the jumping.
+
+**Overview of all setting variables for jumping**
+
+All settings for jumping can be found in the HexaCharacter in the LuminaVRMovement component under Settings -> Jumping.
+
+<img src="./images/JumpSettings.png" style="width: 80%;">
+
+| Variable                    | Subcategory      | Description |
+|-----------------------------|------------------|-------------|
+| **Allow Jumping**           | General          | Enables or disables the ability to jump. |
+| **Jump Strength Scaler**    | General          | Scales the overall strength (height) of the jump for all jumping types. |
+| **Jumping Type**            | General          | Specifies the type of jumping mechanic, e.g., Physical Jumping. |
+| **Jump Crouch Amount**      | Physical Jumping | Defines how much the character crouches before jumping (0 = standing, 1 = full crouch) |
+| **Jump Strength Multiplier**| Physical Jumping | Multiplier for the stand up speed interpolation. |
+| **Jump in Air Crouch Level**| CrouchInAir      | Defines the crouch level when jumping in the air, e.g., Max Crouch. |
+| **Crouch in Air Curve**     | CrouchInAir      | A curve representing how crouching behavior (interpolation to JumpInAirCrouchLevel) is handled while in the air. |
+| **Use Crouch in Air**       | CrouchInAir      | Toggles to automaticly crouch while in the air. |
+| **Jump Strength**           | Impulse Jumping  | Absolute strength of the jump when using impulse jumping. |
+| **Jump Reset Delay**        | Impulse Jumping  | The cooldown time in seconds before another jump can be initiated. |
+| **Use Crouch Before Jump**  | Impulse Jumping  | Enables the character to crouch before making a jump also in impulse jumping. |
+| **Crouch Before Jump Amount** | Impulse Jumping | The degree to which the character crouches before jumping, expressed as a fraction of full crouch. |
+| **Landing Force Threshold** | CrouchLanding    | The force threshold for landing, which defines if the landing event is fired through the hit. |
+
+
+#### Swimming
 #### Slopes
 
 ### 2.3 Character collisions
