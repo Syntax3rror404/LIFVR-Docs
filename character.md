@@ -118,6 +118,8 @@ You have the oportunity to add logic to the methods by two ways:
 
 Key characteristics like the body proportions of the Hexa Physics Rig and the Hexa Character are defined by a **CharacterProportionsDA**. This data asset is assigned to the variable `BP_HexaCharacter -> CharacterProportions`. The **DefaultCharacterProportionsDA** is configured to match the proportions of the UE5 Mannequins. You can further customize the character by creating (duplicating the default data asset or creating a child data asset from the class CharacterProportionsDA) your own data asset and assigning it to the variable **CharacterProportions** in the BP_HexaCharacter. In this data asset, you can specify the exact local position of the pelvis or use the LegToBodyRatio. The **Default Character Height** represents the total height of the character in a standing position.
 
+<img src="./images/DefaultCharProportions.png" style="width: 30%;"> 
+
 During calibration, the HMD automatically adjusts the height to match the virtual character height as defined in the data asset. This method is called once at the beginplay or after the player puts on the headset. Calibration can also be adjusted in the **MainMenu** under **Character** (to open the main menu press the menu button on the controller). The reference point for the HMD is floor level.
 
 > **_NOTE:_** If you encounter issues where the HexaPhysicsRig does not initialize correctly, check that your guardian is set up properly and the floor level is tracked accurately.
@@ -217,6 +219,8 @@ Both turn modes work for the physical locomotion and the logical locomotion (Loc
 
 The TurnMode can also be changed in game in the main menu in the category **Controls**. There the buttons are bind to change the ``` TurnMode ``` variable in the HexaCharacter.
 
+To rotate the character from logic you can use the `RotateRigSmooth(float angle)` method to rotate it smoothly with the specified angle. This is for example also used to rotate the character on rotating platforms.
+
 #### Climbing
 
 Climbing works practically out of the box. Because the hands are physically connected to the character, to enable climbing it's only needed to give the climb able actor a grab tag (grabbing actor settings (see [VR Physics Hands](/hands.md))). Because the physics rig is quite heavy by default to be more stable for climbing it automaticly adjusts the weight to climb more easily. It also automaticly increases the AutoReleaseThreshold of the hands, so that the character does not auto release while climbing that easily. The character can automaticly climb crouch. This is triggered if the character tries to go over a ledge. It's possible to enable ```bAlwaysClimbCrouch``` (can also be set in the main menu: controls). Than it will always crouch when climbing.
@@ -294,6 +298,11 @@ To crouch driven from code logic there are two options:
 1. **Interpolation mode**: Use the interpolation mode in the LuminaVRMovementComponent. For this you first need to set ```bUseInterpolationCrouchMode = true```. Afterwards you can call the function ``` SetCrouchLevel(ECrouchLevel NewCrouchLevel)```. This sets a target height for the character based on the crouch level. It's important to implement logic to reset the interpolation mode by ```bUseInterpolationCrouchMode = false``` and calling afterwards ```ResetCrouchLevelOverride()```, because the interpolation mode overrides the target height for the character and the default crouch calculations.
 
 2. **Simulate thumbstick input**: You can call continously (e.g. in a custom timer) the method ```UpdateVirtualCrouchOffsetAdd(Offset)```. This will let the character crouch downwards for offsets > 0.0 and upwards for offsets < 0.0. The speed scales by |offset|. Important it'S important to have a checking condition when the desired height is reached and to stop the loop than. Useful is here e.g. the function ```GetCurrentCrouchPercentage()```. If finished set ```VirtualCrouchOffset = 0.0f``` to immediately stop there. 
+
+**Auto Crouch**
+
+> **_Important:_** To enable automatic crouching and adjustments if the head is blocked it's important to set the collision response channel `PawnHead` to `blocked` in the actor or component (collision category) which should be able to trigger the auto crouch. 
+ 
 
 #### Jumping
 
@@ -375,11 +384,48 @@ All settings for jumping can be found in the HexaCharacter in the LuminaVRMoveme
 
 
 #### Swimming
-#### Slopes
+
+#### Slopes, Slides and Rotating Ground
+
+**Slopes**
+
+The HexaCharacter detects slopes and acts as specified on them. In general it's heavier for the character to move upwards than downwards on slopes (speed scales with slope angle).
+In the LuminaVRMovement (or HexaCharacter) details panel under Settings -> Locomotion -> Slopes you can define the 
+
+* **Max Walkable Slope Angle**: On slopes steeper than this angle the HexaCharacter can not move/walk upwards. 
+* **Max Standable Slope Angle**: On slopes steeper than this angle the HexaCharacter is sliding down with acceleration. 
+
+<img src="./images/SlopesSettings.png" style="width: 65%;">
+
+You can get the current slope angle of the ground the character stands on with the **OnSlopeUpdate** event dispatcher or the method `GetCurrentSlopeAngle()` in the LuminaVRMovementComponent. Additionally you can check if the character is currently moving upwards or downwards on the slope with the `IsMovingUphillMethod()` and the `GetMovementDirection()` functions.
+
+<p>
+<img src="./images/OnSlopeUpdateEvent.png" style="width: 45%;">
+<img src="./images/Slopes.png" style="width: 45%;">
+<p>
+
+IF you need even more information of the ground, like the physical material or the friction value you can access the last ground Hit result of the HexaPhysicsRig with the function `GetRecentFloorHit()` in there.
+
+<img src="./images/FloorFunctions.png" style="width: 45%;">
+
+**Slides**
+
+If the ground has a physical material with low or no friction the HexaPhysicsRig will automaticly slide down. See the slide example in The Lumina Museum Map.
+
+<img src="./images/SlideExample.png" style="width: 40%;">
+
+**Rotating Ground**
+
+To enable that the HexaCharacter rotates automaticly with a rotating ground you only need to set the rotating floor tag `RotatingFloor` (FName) in the actor or rotating components. If everything in the actor rotates use the actor tag, otherwise set the component tag of the specific component which rotates. See examples: `BP_Rotating_Platforms` in the content browser under Plugin/LIFVR Content/Blueprints/LevelArchitecturePhysics.
+
+<img src="./images/RotatingGround.png" style="width: 70%;">
+
+The character is rotated by smoothly updating it's rotation via the `RotateRigSmoothly(float angle)` function in the LuminaVRMovementComponent. Input for turning are not overriden by this rotation, so the character can still turn manually.
 
 ### 2.3 Character collisions
 
 ### 2.4 Motion Sickness Prevention
+
 The Hexa Character includes a Vignette child actor component (BP_ViewVignette / AViewVignette (C++)) which can be used to prevent motion sickness. It can be enabled or disabled in the main menu or in the BP_HexaCharacter Settings -> Motion Sickness Prevention -> Vignette.  
 
 <img src="./images/VignetteSettings.png" style="width: 60%;">
