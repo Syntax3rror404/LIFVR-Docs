@@ -311,8 +311,8 @@ The character crouches automaticly if it's head is blocked above for all objects
 
 In LIFVR are currently two jump types implemented: 
 
-1.) Impulse Jumping
-2.) Physical Jumping
+    1.) Impulse Jumping
+    2.) Physical Jumping
 
 You can define them in the LuminaVRMovement component in the ```EVRJumpingTypes JumpingType``` variable (Settings->Jumping).
 
@@ -388,6 +388,8 @@ All settings for jumping can be found in the HexaCharacter in the LuminaVRMoveme
 
 #### Swimming
 
+
+
 #### Slopes, Slides and Rotating Ground
 
 **Slopes**
@@ -417,9 +419,12 @@ If the ground has a physical material with low or no friction the HexaPhysicsRig
 
 <img src="./images/SlideExample.png" style="width: 40%;">
 
-**Rotating Ground**
+**Rotating Floor**
 
-To enable that the HexaCharacter rotates automaticly with a rotating ground you only need to set the rotating floor tag `RotatingFloor` (FName) in the actor or rotating components. If everything in the actor rotates use the actor tag, otherwise set the component tag of the specific component which rotates. See examples: `BP_Rotating_Platforms` in the content browser under Plugin/LIFVR Content/Blueprints/LevelArchitecturePhysics.
+To enable that the HexaCharacter rotates automaticly with a rotating floor you only need to set the rotating floor tag `rotate` (default FName) in the actor or rotating components. If everything in the actor rotates use the actor tag, otherwise set the component tag of the specific component which rotates. See examples: `BP_Rotating_Platforms` in the content browser under Plugin/LIFVR Content/Blueprints/LevelArchitecturePhysics. 
+
+> **_Note:_** You can change this tag value in the **DA_TagConfig** in the content folder: Plugins/LIFVR/LIFVR Content/Blueprints/Core.
+
 
 <img src="./images/RotatingGround.png" style="width: 70%;">
 

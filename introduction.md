@@ -76,3 +76,28 @@ The plugin includes the following classes and components:
 > **_NOTE:_** If you encounter issues where the HexaPhysicsRig does not initialize correctly, check that your guardian is set up properly and the floor level is tracked accurately. At the moment, there is no full body avatar, but that, along with teleportation and a stabbing system, will be the next features to be implemented in the framework.
 
 The most important classes and components will be explained in more detail in the main part of this documentation.
+
+
+### Lumina Tags
+LIFVR uses tags for a lot of logic to make it user-friendly. For example to enable grabbing an actor you need to set "grab" into the actor tag.
+The default tags of the framework are:
+
+
+| Tag Name         | Tag Value | Description | Category      |
+|------------------|-----------|-------------|---------------|
+| GrabTag          |     grab      |  Enable grabbing an actor by adding this tag in the actor tag.    | User |
+| PullTag          |     pull      |  Enable pull grabbing an actor by adding this tag in the actor tag.    | User |
+| ClimbTag         |     climb      |   Enable additional features for climbing for which it's important to be 100% accurate. For example if you want to use bAlwaysClimbCrouch          | User |
+| InteractionTag   |     interaction      |      This is an internal tag used to detect if an actor has an interaction point and solver.       | Internal |
+| AutoCrouchTag    |     autocrouch      |     Enable Auto Crouch mechanics for a component of type physics body. Add this tag eather to the component itself or to the actor (actor tag)       | User |
+| RotatingFloorTag |     rotate      |     Enable that the character rotates automaticly if standing on rotating floor (e.g. platforms). Add this tag to the rotating component of the actor or the whole actor if every floor component is rotating in it.      | User |
+| PhysicsInputTag  |     input      |     This is an internal tag to detect if an actor has an physics input component.        | Internal |
+
+**User** means it's a tag you have to set manually in the actor or component to enable the action.
+
+**Internal** means that's an internal tag used to efficiently drive logic and you don't need to set it up. This is automaticly handled by the framework.
+
+The tag name values are stored in a data asset called **DA_TagsConfig**. It can be found in the content folder: Plugins/LIFVR/LIFVR Content/Blueprints/Core.
+If you want to change the names for the tags, change the text value on the right side of the map in this data asset and the framework automaticly uses the new tag values.
+
+> **_Important:_** Do not rename or move this data asset to another location. The redirections are not automaticly updated in C++, so the framework can't find this asset anymore if you do so.
