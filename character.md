@@ -5,9 +5,22 @@
 ### 2.1 Character Hierarchy and Structure
 The base class for the Hexa Character is the **<span style="color: #ADD8E6;">VRControllerCharacter</span>**. This class handles all inputs, including enhanced input actions and mapping contexts.
 
-The Hexa Character (BP_HexaCharacter) is fully physics-based, enabling interactive VR world experiences. It is heavily inspired by Boneworks/Bonelabs and the VRGK (Virtual Reality Game Kit) character. The character is powered by a Hexa Physics Rig (BP_HexaPhysRig), which includes basic collision objects connected by physic constraints. A collision solver component tracks collisions of different body parts within the Hexa Physics Rig, driving logic in the Hexa Character.
+|   Hexa character classes/components:        | Description                                                                |
+|--------------------------|----------------------------------------------------------------------------|
+| 1. Hexa Character         | Main class of the physical VR character combining the other character classes and components, containing the VR camera and the motion controllers.     |
+| 2. Hexa Physics Rig         | Manages physical collisions, bodies, and constraints of the character.     |
+| 3. VR Physics Hands         | A VR hand class that enables physical grabbing and is physically connected to the Hexa Physics Rig. |
+| 4.  LuminaVRMovement Component | Handles locomotion logic using Hexa Character and Hexa Physics Rig classes. |
 
-The character class acts as the manager for all related classes, such as spawning and invoking the Hexa Physics Rig, LuminaVRMovementComponent, or the specified VR physics hands.
+
+The Hexa Character (BP_HexaCharacter) is fully physics-based, enabling interactive VR world experiences. It is heavily inspired by Boneworks/Bonelabs and the VRGK (Virtual Reality Game Kit) character. The character needs a Hexa Physics Rig (BP_HexaPhysRig) to work, which includes basic collision objects connected by physic constraints. This is assigned in the details panel of the character under `Settings/PhysicsRig` in the variable `Physics Rig Class`. There are no changes or customizations necessary to do in the Hexa Physics Rig. A collision solver component tracks collisions of different body parts within the Hexa Physics Rig, driving logic in the Hexa Character. You can find more information about the collision solver component here: [Interactions with objects](/interactions.md) (section 4.0) and about the character collision handling at **section 2.3** of this page.
+
+Furthermore the Hexa Character needs right and left hand classes assigned of the type BP_VRPhysicsHand (class BP_VRPhysicsHand_Right and any children of it are compatible). These are defined under `Settings/Hands` in the variables `Hand Class R / L`. 
+
+<img src="./images/DefaultHandClasses.png" style="width: 65%;">
+
+The Hexa Character class acts as the manager for all related classes, such as spawning and invoking the Hexa Physics Rig, LuminaVRMovementComponent, or the specified VR physics hands.
+
 
 ### 2.2 (Enhanced) Inputs and Mapping
 
@@ -132,7 +145,7 @@ The second character data asset is the **CrouchConfigDA** in this data asset it'
 
 ### 2.4 Locomotion: LuminaVRMovementComponent
 
-The locomotion of the character is managed by the **LuminaVRMovementComponent**. This is a completely new component within LIFVR, not a derivative of Epic's movement component.
+The locomotion of the character is managed by the **LuminaVRMovementComponent**. (This is a completely new component within LIFVR, not a child of Epic's movement component.
 
 The Hexa Character has the following **movement states**:
 
@@ -183,6 +196,7 @@ For logical jumping, implement the event or override the method:
 - in Blueprint: `LogicalJumping()`
 
 #### Moving 
+------------------------
 
 The character is moving through a locomotion sphere in the Hexa Physics Rig. The input values of the thumbstick are transformed to a torque for the locomotion sphere. The magnitude for the torque is scaled by the speed values, which you can set in the settings of the LuminaVRMovementComponent -> Walking.
 
@@ -207,6 +221,7 @@ You can access the current speed and velocity vector of the character with the f
 <img src="./images/SpeedMethods.png" style="width: 60%;">
 
 #### Turning 
+------------------------
 
 In LIFVR are two turn modes (EVRTurnMode (Enum)) implemented:
 
@@ -222,6 +237,7 @@ The TurnMode can also be changed in game in the main menu in the category **Cont
 To rotate the character from logic you can use the `RotateRigSmooth(float angle)` method to rotate it smoothly with the specified angle. This is for example also used to rotate the character on rotating platforms.
 
 #### Climbing
+------------------------
 
 Climbing works practically out of the box. Because the hands are physically connected to the character, to enable climbing it's only needed to give the climb able actor a grab tag (grabbing actor settings (see [VR Physics Hands](/hands.md))). Because the physics rig is quite heavy by default to be more stable for climbing it automaticly adjusts the weight to climb more easily. It also automaticly increases the AutoReleaseThreshold of the hands, so that the character does not auto release while climbing that easily. The character can automaticly climb crouch. This is triggered if the character tries to go over a ledge. It's possible to enable ```bAlwaysClimbCrouch``` (can also be set in the main menu: controls). Than it will always crouch when climbing.
 
@@ -242,6 +258,7 @@ Climbing works practically out of the box. Because the hands are physically conn
 
 
 #### Crouching / TipToe
+------------------------
 
 The hexa character can crouch and tip toeing. In the default configuration crouching is triggered by pulling the right thumbstick down and tip toe by pulling it up. If the thumbstick is released while tip toe it automaticly goes back to standing height. The crouching is organized into crouch levels. If you release the thumbstick while crouching it will automaticly go to the nearest crouch level height. The following crouch levels exist.
 
@@ -308,6 +325,7 @@ The character crouches automaticly if it's head is blocked above for all objects
 > **_Note:_** To enable automatic crouching and adjustments for a   physics body component you need to add the AutoCrouchTag (Default value = "autocrouch") eather as component tag or as actor tag. You can change the tag names in the DA_TagConfig. In this way it's ensured the automatic crouching is really only triggered if wanted and not for example while hiding in a locker or from grabbed physics actors.
  
 #### Jumping
+------------------------
 
 In LIFVR are currently two jump types implemented: 
 
@@ -387,10 +405,32 @@ All settings for jumping can be found in the HexaCharacter in the LuminaVRMoveme
 
 
 #### Swimming
+------------------------
+
+To create a zone in which the Hexa Character should swim you only need to drag the BP_SwimZone blueprint into you're level. You can find it in the content browser under `Plugins/LIFVR Content/Blueprints/INteractions/Fields`. It is a child of the BP_ZeroGravityZone. The zone simply detects the character and triggeres the swimming logic in the LuminaVRMovement component of the character.
+
+- ```StartSwimming()```: Sets the movement state and increases the linear damping of the character. Furthermore it adds the simple color overlay if this one is used.
+- ```SwimmingTick()```: Tracks the hand motion, velocity and calcualtes the force for the character. 
+- ```StopSwimming()```: Stops the swimming tick and resets all swimming variables.
+
+You can swim by making a swimming gesture. The movement component tracks the celocity of you're hands and calculates the force in which the character should move/swim. You can enable or disable swimming with the variable `bAllow Swimming` and scale the speed of the swimming with `Swimming Speed` float (higher means faster) in the settings of the LuminaVRMovementComponent under `Settings -> Locomotion -> Swimming`
+
+<img src="./images/SwimmingSettings.png" style="width: 55%;">
+
+It also detects if the head is under water and uses a post process effect for under water. Therefore the zone has a post process component. This component is added in BP, so if you don't want to use the post process effect and create a cheaper material for this (e.g. for mobile platform) you can just delete the component in the swimming area or set `bUsePostProcessEffect = False` in the swimming area.
+
+For the post process effect you can use eather a simple color overlay which you can enable through `bUseSimpleColorSwimOverlay = True` and adjust via the variable `Simple Color Overlay` in the settings of the LuminaVRMovementComponent or the **M_UnderwaterEffect** material for a more advanced effect (See: PLugins/LIFVR Content/Materials/Base).
+
+The zone has also a visualizing static mesh component with a default water material of the starter content of epic. You can change this material to the water material of you're liking in the **AreaVisual** component. Because this is a static mesh component attached to the trigger box **Area** scale the **Area** component to adjust the zone in the level (not the box extent). In this way the visualizer scales automaticly correct.
+
+You can add logic after the swim events (see image below). To check if currently swimming you can use the movement state or with the function `IsSwimming()` in the LuminaVRMovement component in the character. Further it's possible to access the swim direction (return: FVector) or the swim speed (return: float) with the functions `GetCurrentSwimDirection(bool bNormalize)` and `GetCurrentSwimSpeed()`. 
+
+<img src="./images/SwimEvents.png" style="width: 55%;">
 
 
 
 #### Slopes, Slides and Rotating Ground
+------------------------
 
 **Slopes**
 
