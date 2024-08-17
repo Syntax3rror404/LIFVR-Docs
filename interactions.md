@@ -116,7 +116,17 @@ With interaction points and the interaction solver you can choose between differ
 - **Static Animation**: You can define fixed animations, which you need to have already created and saved in a data asset of the type **HandAnimControlDA** (`Plugins/LIFVR Content/Blueprints/Animations/Hands/AnimationsData`).
 - **Basic Poser**: The default basic tracer poser.
 
-> **_Note:_**> You always only need to create animations for the right hand and they will automaticly work as well for the left hand.
+>**_Note:_**> You always only need to create animations for the right hand and they will automaticly work as well for the left hand.
+
+**Example actors:** 
+
+| Animation Mode            | Example Actors                                | Subfolder                  |
+|---------------------------|-----------------------------------------------|----------------------------|
+| Aligner Animation       | BP_Dagger, BP_Crowbar    | `/Tools` |
+| Static Animation          | BP_SimpleGun,                   | `/Tools/Weapons/`       |
+| Basic Poser      |    | `/Toys`   |
+
+
 
 <p>
 <img src="./images/AnimationMode.png" style="width: 45%;">
