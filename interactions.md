@@ -6,6 +6,8 @@ This component handles more complex collisions between actors, like "soft/normal
 
 > **_Important:_** At least one primitive component in the actor needs to simulate physics, has collision enabled and `Simulation Generates Hit Events`  enabled. Otherwise the collision solver can't track collisions and the events will not fire.
 
+> **_Note:_**> If an actor with skeletal mesh does not trigger the collision events of the collision solver component even with `Simulation Generates Hit Events` enabled, make sure this is also checked in the physics asset of this component in the collision section.
+
 it gives access to the following events:
 
 | Event Category          | Event Name                   | Description                                                                      | Outputs                                                                                     |
@@ -82,7 +84,6 @@ Further useful methods of the grab handler are shown in the following image:
 | Option 3: Use both components                     | - Combines the features of Option 1 and Option 2                                                                                                                                                                                                                                       | Leverages the advantages of both systems for comprehensive handling and interaction. | BP_SimpleGun, BP_Dagger |
 
 
-
 ### Grabbing types and loose grabbing
 ------
 
@@ -124,7 +125,7 @@ With interaction points and the interaction solver you can choose between differ
 |---------------------------|-----------------------------------------------|----------------------------|
 | Aligner Animation       | BP_Dagger, BP_Crowbar    | `/Tools` |
 | Static Animation          | BP_SimpleGun,                   | `/Tools/Weapons/`       |
-| Basic Poser      |    | `/Toys`   |
+| Basic Poser      | BP_Sledgehammer, BP_MetalPot   | `/Toys` `/Tools`  |
 
 
 
@@ -141,7 +142,9 @@ With interaction points and the interaction solver you can choose between differ
 
 > **_Important:_**> By default the entire actor can be grabbed (any component with physics and generate overlap events enabled).
 
-One option to block grabbing is to use the **BP_GrabBlockerArea** (`Plugins/LIFVR Content/Blueprints/Interactions/BlockingAreas`). You can simply add this component in you're actor or in the level, choose a geometry for the component and place it at the location you want. Everything in this area can not be grabbed anymore. This is independent of the grabbing type or option used. So it works for the basic poser without any component as well as for interaction points. 
+One option to block grabbing is to use the **BP_GrabBlockerArea** (`Plugins/LIFVR Content/Blueprints/Interactions/BlockingAreas`). You can simply add this component in you're actor or in the level, choose a geometry (static mesh) for the component and place it at the location you want. Everything in this area can not be grabbed anymore. This is independent of the grabbing type or option used. So it works for the basic poser without any component as well as for interaction points (See example **BP_BaseValveWheel**).
+
+<img src="./images/GrabBlockingArea.png" style="width: 35%;">
 
 ### 4.1.1 Grab Handler Component
 grab handler component (more precise control and strength switch, feeling weights)
