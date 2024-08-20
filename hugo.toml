@@ -1,4 +1,4 @@
 baseURL = 'https://syntax3rror404.github.io/LIFVR-Docs/'
 languageCode = 'en-us'
 title = 'LIFVR Documentation'
-theme = 'Docsy'
+theme = 'docsy'
