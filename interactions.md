@@ -103,9 +103,31 @@ Further it drives an overlay of surface finger animation if not grabbing anythin
 
 <img src="./images/HandStateMachine.png" style="width: 55%;">
 
-By default the hands use a simple tracer poser to create automaticly a grabbing pose. Furthermore it uses different grab poses for **index, middle fingers and both grab**. One can disable this in the **GrabHandlerComponent** with setting the variable `Disable Index Middle Poses = True` in the Grab Handler component details panel under `Settings -> Grabbing`.
+By default the hands use a simple tracer poser to create automaticly a grabbing pose. Furthermore it uses different grab poses for **index, middle fingers and both grab**. One can disable this in the **GrabHandlerComponent** (or **Interaction base component** (interaction point)) with setting the variable `Disable Index Middle Poses = True` in the Grab Handler component details panel under `Settings -> Grabbing` (or in the interaction point `Settings -> Animations`).
 
-<img src="./images/DisableIndexPose.png" style="width: 35%;">
+<img src="./images/SettingGrabbingPose.png" style="width: 55%;">
+
+Further by default the thumb will be locked to the defined grab pose (in both aligner and static animation mode). If you want to enable that the thumb reacts to button touches while grabbing, you can set `LockThumbPose = False` in the Grab Handler component (or interaction point) details panel under `Settings -> Grabbing` (or in the interaction point `Settings -> Animations`).
+
+>**_Important:_** If an actor has an interaction point and grab handler the variables of the interaction point are always prioritized and will override the ones in the grab handler component.
+
+There exist different general grab types for the VR (Physics)Hands which drive different logic mainly based on the different animation methods. The general grab types are:
+
+- **Basic**: This is the grabbing with the basic poser
+- **Interaction Grab**: This is grabbing with interaction points and aligner animation mode. (here poses defined in the aligner component)
+- **Static Animation Grab**: This is grabbing with interaction points and static animation mode. (here poses defined in a animation data asset).
+- **IK Grab** (Experimental): This is grabbing via a control rig of the hands. This grabbing type is still experimental and not yet polished!
+- **Physics Grab** (Not implemented yet): This type is already prepared for the experimental physics control hands, but not yet implemented.
+
+The correct modes are automaticly chosen by the grabbing interaction (e.g. with interaction points) or default **Basic**. If you want to try the IK Grab you can set the grab type in the hands blueprint.
+
+The default hand animations are defined in the **DA_DefaultHandAnims** data asset (type: HandAnimControlDA). It can be found in the content folder: `Plugins/LIFVR Content/Animations/Hands/AnimationsData`. You can change the animations in the slots of this data asset, but it's important that the animations are for the **SK_MannequinsXR** skeleton or retargeted to it.
+
+- **Opened**: Animation used for animations if button touches are triggered (thumb (thumbstick touch, Button touch), index finger (trigger touch)).
+- **Idle**: Idle pose if nothing is triggered.
+- **Grabbed**: Normal grabbing pose.
+- **LooseGrabbing**: Here you can define a custom pose while loose grabbing is active. (e.g. in interaction points with static animation grab).
+- **Grasping**: Default grasping animation. (Can be overriden for specific actors/interaction points).
 
 ### Animations with interaction points
 -----
@@ -117,7 +139,7 @@ With interaction points and the interaction solver you can choose between differ
 - **Static Animation**: You can define fixed animations, which you need to have already created and saved in a data asset of the type **HandAnimControlDA** (`Plugins/LIFVR Content/Blueprints/Animations/Hands/AnimationsData`).
 - **Basic Poser**: The default basic tracer poser.
 
->**_Note:_**> You always only need to create animations for the right hand and they will automaticly work as well for the left hand.
+>**_Note:_** You always only need to create animations for the right hand and they will automaticly work as well for the left hand.
 
 **Example actors:** 
 
@@ -127,22 +149,43 @@ With interaction points and the interaction solver you can choose between differ
 | Static Animation          | BP_SimpleGun,                   | `/Tools/Weapons/`       |
 | Basic Poser      | BP_Sledgehammer, BP_MetalPot   | `/Toys` `/Tools`  |
 
-
-
 <p>
 <img src="./images/AnimationMode.png" style="width: 45%;">
 <img src="./images/StaticAnimationMode.png" style="width: 45%;">
 <p>
 
+>**_Note:_** For more information see section **Interaction Solver and Points**.
+
 ### Grabbing indicators (grab circle and animations)
 ------
+
+LIFVR has two indicators which give feedback if an actor can be grabbed:
+
+- Grab circle
+- Grasping animation
+
+**Grab circle**
+The grab circle is a visualizer which is visible on the actor if it is possible to grab it. By default the circle appears on the nearest location to the hand on the surface of the grabable actor (**surface mode**). If the basic poser is used for grabbing this is the exact location where the skeletal hand mesh will attach if grabbing the actor. There are different grab circle modes. If an actor uses an interaction point (+ interaction solver component) you can choose the grab circle mode for this actor/interaction point:
+
+| Mode      | Description                                       |
+|-------------|----------------------------------------------------|
+| Surface     | Grab circle shows on the surface of the object     |
+| AttachPoint | Grab circle shows on the attach point for the hand (interaction points) |
+| FixCenter   | Grab circle shows on the center of the object      |
+| FlexCenter  | Grab circle is centered but movable (e.g., crowbar)|
+
+It's also possible to disable the grab circle completely for an interaction point by setting the variable `UseGrabCircle` (interaction point: `Settings -> GrabCircle`). This is as an example in the **BP_DrawingBrush** the case.
+
+**Grasping animation**
+
+If using the static animation mode within interaction points you can set a different grasping pose for each interaction point/actor to override the default one forspecific actors. Set the grasping animation in the data asset (type:**HandAnimationControlDA**) with the static animations for this actor/interactionpoint.
 
 ### How can I block grabbing of specific components in an actor or areas?
 ------
 
-> **_Important:_**> By default the entire actor can be grabbed (any component with physics and generate overlap events enabled).
+> **_Important:_** By default the entire actor can be grabbed (any component with physics and generate overlap events enabled).
 
-One option to block grabbing is to use the **BP_GrabBlockerArea** (`Plugins/LIFVR Content/Blueprints/Interactions/BlockingAreas`). You can simply add this component in you're actor or in the level, choose a geometry (static mesh) for the component and place it at the location you want. Everything in this area can not be grabbed anymore. This is independent of the grabbing type or option used. So it works for the basic poser without any component as well as for interaction points (See example **BP_BaseValveWheel**).
+One option to block grabbing is to use the **BP_GrabBlockerArea** (`Plugins/LIFVR Content/Blueprints/Interactions/BlockingAreas`). You can simply add this component in you're actor or in the level, choose a geometry (static mesh) for the component and place it at the location you want. Everything in this area can not be grabbed anymore. This is independent of the grabbing type or option used. It is basicly intended for actors or parts of an actor in which the basic poser is used for grabbing (See example **BP_BaseValveWheel** or **BP_Hammer**).
 
 <img src="./images/GrabBlockingArea.png" style="width: 35%;">
 
