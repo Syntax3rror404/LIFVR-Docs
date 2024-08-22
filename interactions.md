@@ -252,7 +252,7 @@ More information for the **Collision** and **ComponentsHit** settings can be fou
 
 > **_Important:_** To enable custom strength or use experimental settings of PD you need to enable `Override Hand Physics` first.
 
-**Usefull functions:**
+**Useful functions:**
 --
 
 <img src="./images/UsefulFuncGrabHandler.png" style="width: 65%;">
