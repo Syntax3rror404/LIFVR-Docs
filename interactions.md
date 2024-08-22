@@ -204,10 +204,10 @@ With the grab handler component the hand strenght is automaticly adjusted (stren
 
 The grab handler component gives access to the following settings:
 
-<img src="./images/SettingsGrabHandler.png" style="width: 85%;">
+<img src="./images/SettingsGrabHandler.png" style="width: 90%;">
 
 **Common settings:**
-
+--
 | Category           | Setting                      | Description                                                                                                                                         |
 |--------------------|------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
 | **Grabbing**       | Disable Index Middle Poses   | If set to true, you can disable different poses when grabbing with middle fingers (grab button) or index finger (trigger button).                    |
@@ -223,7 +223,7 @@ The grab handler component gives access to the following settings:
 More information for the **Collision** and **ComponentsHit** settings can be found in subsection **4.0 Collision Solver Component**. 
 
 **Advanced settings:**
-
+--
 | Category                    | Setting                             | Description                                                                                                                                 |
 |-----------------------------|-------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
 | **Collision Switch**        | SwitchStrengthOnCollision           | Disable the switch of the hand strength for this actor. This can lead to too much force on collisions with a grabbed actor. You can disable it if custom strength profiles are needed. |
@@ -235,11 +235,27 @@ More information for the **Collision** and **ComponentsHit** settings can be fou
 |                             | Linear Grab Strength Scale          | Adjusts the linear strength specifically while grabbing the actor and not colliding.                                                        |
 |                             | Angular Grab Strength Scale         | Adjusts the angular strength specifically while grabbing the actor and not colliding.                                                       |
 
+
+**Experimental settings:** 
+--
+
+| Category | Setting                  | Description                                                                                                                                                 |
+|----------|--------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **PD**   | Activate Stabilize       | This will enable the second PD Constraint even if PD is disabled, leading to an increased impact of the Hexa Physics Rig.                                    |
+|          | Linear Stabilize Amount  | Linear strength multiplier of the second constraint.                                                                                                        |
+|          | Angular Stabilize Amount | Angular strength multiplier of the second constraint.                                                                                                       |
+|          | Enable PD                | This will enable parent dominates while grabbing (this actor will have no impact on the hexa character). This is still experimental and can lead to unstable physics. |    
+
 > **_Note:_** If `SwitchStrengthOnCollision` is disabled only the **Grab Strength** is used.
 
 > **_Important:_** When changing the strength scales it's important to have a descent ratio betweeen the linear and angular strength. If the angular strenght is too high compared to linear strenght, it can lead to strange behavior while grabbing. For example you can not freely move an actor if grabbed with both hands, because the angular strength prohibits it. So if you have cutomized strenght and experiences something like that, try to reduce the angular strength or increase the linear.
 
 > **_Important:_** To enable custom strength or use experimental settings of PD you need to enable `Override Hand Physics` first.
+
+**Usefull functions:**
+--
+
+<img src="./images/UsefulFuncGrabHandler.png" style="width: 65%;">
 
 ### 4.1.2 Interaction component
 How to use it, needed components: interaction solver component, aligner components, aligner poses, dev tools: visualising flip/mirror preview, using gizmos, two hand stuff, physical settings, how to use button inputs,..
