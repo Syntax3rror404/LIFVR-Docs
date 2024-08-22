@@ -1,0 +1,9 @@
+baseURL = 'https://syntax3rror404.github.io/LIFVR-Docs/'
+languageCode = 'en-us'
+title = 'LIFVR Documentation'
+theme = 'docsy'
+
+[module]
+replacements = "github.com/FortAwesome/Font-Awesome -> ., github.com/twbs/bootstrap -> ."
+[[module.imports]]
+path = "docsy"
