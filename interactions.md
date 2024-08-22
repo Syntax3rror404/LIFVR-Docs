@@ -183,21 +183,71 @@ If using the static animation mode within interaction points you can set a diffe
 ### How can I block grabbing of specific components in an actor or areas?
 ------
 
-> **_Important:_** By default the entire actor can be grabbed (any component with physics and generate overlap events enabled).
+> **_Important:_** By default the entire actor can be grabbed (any component with physics and generate overlap events enabled). Ih you don't want that a component can be grabbed and you don't need `generate overlap events` disable it.
 
 One option to block grabbing is to use the **BP_GrabBlockerArea** (`Plugins/LIFVR Content/Blueprints/Interactions/BlockingAreas`). You can simply add this component in you're actor or in the level, choose a geometry (static mesh) for the component and place it at the location you want. Everything in this area can not be grabbed anymore. This is independent of the grabbing type or option used. It is basicly intended for actors or parts of an actor in which the basic poser is used for grabbing (See example **BP_BaseValveWheel** or **BP_Hammer**).
 
 <img src="./images/GrabBlockingArea.png" style="width: 35%;">
 
 ### 4.1.1 Grab Handler Component
-grab handler component (more precise control and strength switch, feeling weights)
 This component is a children of the collision solver component, so all events and methods as described in subsection **4.0 Collision Solver Component** can be accessed from this component. It is recommended to use the collision solver component for all actors, so if you have a grab able actor only use this Grab Handler Component instead of the Collision Solver Component.
 
 The Grab Handler Component enables precise control of the grabbing of actors. Because it also handles the strength of the VRPhysicsHands dynamically to feel right in all situations and there impact on the physics character this component should be added to all grab able actors. It also let you access the following events:
 
-    - 
+<img src="./images/GrabHandlerEvent.png" style="width: 65%;">
+
+You can access the currently grabbed hand by the method `GetGrabHands()` this returns an array of the hands reference (0: no hand currently grabbing, 1: one hand is grabbing, 2: both hands are grabbing). You can then get which hand is grabbing by calling the method `GetHandType()` (returns: left/right) of the hand reference. If you want to directly check if e.g. the right hand is grabbing the actor you can call the method `GetGrabbedHandWithType(HandType:right/left)` in the Grab Handler component instead. 
+
+<img src="./images/MethodGrabHandler1.png" style="width: 65%;">
+
+With the grab handler component the hand strenght is automaticly adjusted (strength switch) to have more control (following the motion controls more precicely) without beeing to strong on collisions with the grabbed actors. 
+
+The grab handler component gives access to the following settings:
+
+<img src="./images/SettingsGrabHandler.png" style="width: 85%;">
+
+**Common settings:**
+
+| Category           | Setting                      | Description                                                                                                                                         |
+|--------------------|------------------------------|-----------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Grabbing**       | Disable Index Middle Poses   | If set to true, you can disable different poses when grabbing with middle fingers (grab button) or index finger (trigger button).                    |
+|                    | Lock Thumb Pose              | By default, the thumb pose is fixed for grabbing (no changes on input touch event). You can enable the thumb pose to change dynamically by checking this boolean. |
+| **GrabCollision**  | UseGrabCollisionProfile      | Set this to true if you want to change the collision profile of the actor while it's grabbed.                                                       |
+|                    | Default Collision Profile    | If using grab collision profile, this is the default collision profile, normally set to *PhysicsActor*.                                             |
+|                    | Grab Collision Profile       | The collision profile used while grabbing. Set it to *IgnoreHexaBody* to disable collisions between the grabbed actor and the character.            |
+| **Sound**          | Grabbing Sound               | You can override the default grab sound by setting here an actor-specific grab sound.                                                               |
+|                    | Releasing Sound              | You can override the default release sound by setting here an actor-specific release sound.                                                        |
+| **Haptic Feedback**| Basic Collision Effect       | Triggers haptic feedback if the grabbed actor collides with another object (basic collision/touching another object). Continuously fired until the collision has ended.|
+|                    | Hard Collision Effect        | Triggers haptic feedback if the grabbed actor collides hard with another object (hard collision). Fired once the collision strength reaches the hard collision threshold. |    
+
+More information for the **Collision** and **ComponentsHit** settings can be found in subsection **4.0 Collision Solver Component**. 
+
+**Advanced settings:**
+
+| Category                    | Setting                             | Description                                                                                                                                 |
+|-----------------------------|-------------------------------------|---------------------------------------------------------------------------------------------------------------------------------------------|
+| **Collision Switch**        | SwitchStrengthOnCollision           | Disable the switch of the hand strength for this actor. This can lead to too much force on collisions with a grabbed actor. You can disable it if custom strength profiles are needed. |
+| **Strength**                | Linear Strength Scale               | This multiplier adjusts the linear strength of the main physics constraint in the hand, influencing both normal grab strength and grab strength on collisions. |
+|                             | Angular Strength Scale              | This multiplier adjusts the angular strength of the main physics constraint in the hand, influencing both normal grab strength and grab strength on collisions. |
+| **Advanced Custom Strength**| Enable Override Hand Physics        | Required to use the following advanced custom strength settings.                                                                            |
+|                             | Linear Collision Strength Scale     | Adjusts the linear strength specifically while the actor collides.                                                                          |
+|                             | Angular Collision Strength Scale    | Adjusts the angular strength specifically while the actor collides.                                                                         |
+|                             | Linear Grab Strength Scale          | Adjusts the linear strength specifically while grabbing the actor and not colliding.                                                        |
+|                             | Angular Grab Strength Scale         | Adjusts the angular strength specifically while grabbing the actor and not colliding.                                                       |
+
+> **_Note:_** If `SwitchStrengthOnCollision` is disabled only the **Grab Strength** is used.
+
+> **_Important:_** When changing the strength scales it's important to have a descent ratio betweeen the linear and angular strength. If the angular strenght is too high compared to linear strenght, it can lead to strange behavior while grabbing. For example you can not freely move an actor if grabbed with both hands, because the angular strength prohibits it. So if you have cutomized strenght and experiences something like that, try to reduce the angular strength or increase the linear.
+
+> **_Important:_** To enable custom strength or use experimental settings of PD you need to enable `Override Hand Physics` first.
 
 ### 4.1.2 Interaction component
 How to use it, needed components: interaction solver component, aligner components, aligner poses, dev tools: visualising flip/mirror preview, using gizmos, two hand stuff, physical settings, how to use button inputs,..
 
 ### 4.2 Pull Grab
+
+Pull grabbing is written in the pull grab component, which is a component of the VR Hand. To use pull grab in you're custom VR Hand simply create a child of the VR physics hand with pull grab component or add it in you're hand.
+
+To enable pull grab for an actor simply add the **pull tag** `pull` (default) to the actor as tag. (You can rename the tag in the DA_TagsConfig).
+
+If pull grab is possible a hover effect is triggered highlighting the pullable actor. 
