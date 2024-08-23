@@ -4,9 +4,10 @@
 ### 4.0 Collision Solver Component
 This component handles more complex collisions between actors, like "soft/normal" collisions (will fire every custom tick (defined in variable: ) as long the collision is occurung / the actor touches another object) or hard collision (fires once if a threshold of the collision strength is hit) and also registers the end of the collision (fires once). (Note: The end of the collision is not completely stable and sometimes chaos collision ends are missed to track. Hope this gets better with the developement of chaos, but also work in progress to improve this).
 
-> **_Important:_** At least one primitive component in the actor needs to simulate physics, has collision enabled and `Simulation Generates Hit Events`  enabled. Otherwise the collision solver can't track collisions and the events will not fire.
+> [!IMPORTANT]
+> At least one primitive component in the actor needs to simulate physics, has collision enabled and `Simulation Generates Hit Events`  enabled. Otherwise the collision solver can't track collisions and the events will not fire.
 
-> **_Note:_**> If an actor with skeletal mesh does not trigger the collision events of the collision solver component even with `Simulation Generates Hit Events` enabled, make sure this is also checked in the physics asset of this component in the collision section.
+> **_Note:_** If an actor with skeletal mesh does not trigger the collision events of the collision solver component even with `Simulation Generates Hit Events` enabled, make sure this is also checked in the physics asset of this component in the collision section.
 
 it gives access to the following events:
 
@@ -60,7 +61,8 @@ To enable grabbing of an actor you need to follow the following simple steps:
 
 <img src="./images/GrabTag.png" style="width: 65%;">
 
-> **_Important:_**> It's important to add the tag in the actor (**actor tag**) and not in the component. This is because the VR Hands show indicators if grabbing is possible, like the grab circle and a hand animation. To have a better performance the actor tag is used instead of a component tag. In this way it does not need to check each component in the actor if grabbing is possible in tick loop.
+> [!IMPORTANT]
+> It's important to add the tag in the actor (**actor tag**) and not in the component. This is because the VR Hands show indicators if grabbing is possible, like the grab circle and a hand animation. To have a better performance the actor tag is used instead of a component tag. In this way it does not need to check each component in the actor if grabbing is possible in tick loop.
 
 4. **Add the grab handler component**: The hands do automatic adjustements while grabbing an object. For this it's recommended to add the grab handler component. Furthermore for this enable `Simulation Generates Hit Events` in the collision section of the physical component(s) of the actor. (It's a child of the collision solver, so you have access to all features of this component (see more info in the section above)).
 
@@ -109,7 +111,8 @@ By default the hands use a simple tracer poser to create automaticly a grabbing 
 
 Further by default the thumb will be locked to the defined grab pose (in both aligner and static animation mode). If you want to enable that the thumb reacts to button touches while grabbing, you can set `LockThumbPose = False` in the Grab Handler component (or interaction point) details panel under `Settings -> Grabbing` (or in the interaction point `Settings -> Animations`).
 
->**_Important:_** If an actor has an interaction point and grab handler the variables of the interaction point are always prioritized and will override the ones in the grab handler component.
+> [!IMPORTANT]
+> If an actor has an interaction point and grab handler the variables of the interaction point are always prioritized and will override the ones in the grab handler component.
 
 There exist different general grab types for the VR (Physics)Hands which drive different logic mainly based on the different animation methods. The general grab types are:
 
@@ -183,7 +186,8 @@ If using the static animation mode within interaction points you can set a diffe
 ### How can I block grabbing of specific components in an actor or areas?
 ------
 
-> **_Important:_** By default the entire actor can be grabbed (any component with physics and generate overlap events enabled). Ih you don't want that a component can be grabbed and you don't need `generate overlap events` disable it.
+> [!IMPORTANT]
+> By default the entire actor can be grabbed (any component with physics and generate overlap events enabled). Ih you don't want that a component can be grabbed and you don't need `generate overlap events` disable it.
 
 One option to block grabbing is to use the **BP_GrabBlockerArea** (`Plugins/LIFVR Content/Blueprints/Interactions/BlockingAreas`). You can simply add this component in you're actor or in the level, choose a geometry (static mesh) for the component and place it at the location you want. Everything in this area can not be grabbed anymore. This is independent of the grabbing type or option used. It is basicly intended for actors or parts of an actor in which the basic poser is used for grabbing (See example **BP_BaseValveWheel** or **BP_Hammer**).
 
@@ -248,9 +252,11 @@ More information for the **Collision** and **ComponentsHit** settings can be fou
 
 > **_Note:_** If `SwitchStrengthOnCollision` is disabled only the **Grab Strength** is used.
 
-> **_Important:_** When changing the strength scales it's important to have a descent ratio betweeen the linear and angular strength. If the angular strenght is too high compared to linear strenght, it can lead to strange behavior while grabbing. For example you can not freely move an actor if grabbed with both hands, because the angular strength prohibits it. So if you have cutomized strenght and experiences something like that, try to reduce the angular strength or increase the linear.
+> [!IMPORTANT]
+> When changing the strength scales it's important to have a descent ratio betweeen the linear and angular strength. If the angular strenght is too high compared to linear strenght, it can lead to strange behavior while grabbing. For example you can not freely move an actor if grabbed with both hands, because the angular strength prohibits it. So if you have cutomized strenght and experiences something like that, try to reduce the angular strength or increase the linear.
 
-> **_Important:_** To enable custom strength or use experimental settings of PD you need to enable `Override Hand Physics` first.
+> [!IMPORTANT]
+> To enable custom strength or use experimental settings of PD you need to enable `Override Hand Physics` first.
 
 **Useful functions:**
 --
@@ -303,9 +309,8 @@ You can visualize a preview of the mirrored left hand class by adding the method
 
 >**Note:** The **aligner index** is set by the hierarchy of the aligners attached to the interaction base component. So the first right hand aligner (upper one) has index 0, the next one index 1, etc... If left aligners are also attached it's the same counting, but for both only count the same types (left or right). You can also check the aligner index from the construction script with the method `GetAlignerIndex()` in the aligner component. 
 
->**Important:** The **preview methods** (under category: construction script only) and using the aligner component references only works in the construction script. It's not intended to be used in gameplay. The aligners get destroyed OnBeginPlay.
-
-> :exclamation: **Important**
+> [!IMPORTANT]
+> The **preview methods** (under category: construction script only) and using the aligner component references only works in the construction script. It's not intended to be used in gameplay. The aligners get destroyed OnBeginPlay.
 
 **Mirroring Left Hands**
 --

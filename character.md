@@ -320,7 +320,8 @@ To crouch driven from code logic there are two options:
 
 The character crouches automaticly if it's head is blocked above for all objects with the colliding component beeing not a physisc body. This system uses the HeadOverlap component in the HexaCharacter. If an object overlaps with the HeadOverlap component and is not from object type physics body, the character automaticly crouches. Moreover it's not possible to stand up with inputs if the head is blocked or to jump. If jumping and getting blocked the jumping is immediatly finished. 
 
-> **_Important:_** For the system to work it's important that the object blocks the VRPhysicsPawn collision channel. By default everything is set to block the character.
+> [!IMPORTANT]
+> For the system to work it's important that the object blocks the VRPhysicsPawn collision channel. By default everything is set to block the character.
 
 > **_Note:_** To enable automatic crouching and adjustments for a physics body component you need to add the AutoCrouchTag (Default value = "autocrouch") eather as component tag or as actor tag. You can change the tag names in the DA_TagConfig. In this way it's ensured the automatic crouching is really only triggered if wanted and not for example while hiding in a locker or from grabbed physics actors.
  
@@ -334,7 +335,8 @@ In LIFVR are currently two jump types implemented:
 
 You can define them in the LuminaVRMovement component in the ```EVRJumpingTypes JumpingType``` variable (Settings->Jumping).
 
-> **_Important:_** Both of them need the physical locomotion mode enabled, because they rely on the HexaPhysicsRig.
+> [!IMPORTANT]
+> Both of them need the physical locomotion mode enabled, because they rely on the HexaPhysicsRig.
 
 The jump type Logical Jumping is called if the Logical Locomotion mode is used. This is only thought for users who don'T want to use the HexaPhysicsCharacter, but create their character based on the Controller Character with more logic driven locomotion. For this you need to implement a lot of logic by yourself, like the logical jumping. For this mode only turning and logical moving is currently implemented.
 
