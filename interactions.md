@@ -262,17 +262,32 @@ More information for the **Collision** and **ComponentsHit** settings can be fou
 
 How to use it, needed components: interaction solver component, aligner components, aligner poses, dev tools: visualising flip/mirror preview, using gizmos, two hand stuff, physical settings, how to use button inputs,..
 
-The interaction point system enables even more control for grabbing and access to input events. It should be used whenever complex interactions are required.
+The interaction system (consisting of the interaction base component, interaction solver component and Aligner component) enables even more control for grabbing and access to input events. It should be used whenever complex interactions are required.
+
+
+| Component                      | Function              | Description                                                                                                                                                                                                                                                                                                        |
+|--------------------------------|-----------------------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Interaction Base Component** | Interaction points    | Scene component to attach to components in an actor. You can have multiple interaction points in an actor.                                                                                                                                                                                                         |
+| **Aligner Component**          | Hand visualizer       | Visualizer of the hand and specifying the exact transform to pose the hand on grab. If using Aligner animation mode, this also defines the animation pose by defining the finger data. Each interaction point needs at least one right hand aligner component (BP RightAligner). You can have multiple Aligners attached to one interaction point. |
+| **Interaction Solver Component**| Management system     | Management system for all interaction points in an actor. Actor component, which manages the handling between the different interaction points in an actor, like returning the interaction point with highest priority to grab or to register if the actor is holding by two hands on different interaction points. You need one interaction solver component in each actor using the interaction system. |
+
 
 To use interaction points you need to do the following steps:
 1. Add the **Interaction Solver Component** to you're actor.
 2. Add the **Interaction Base Component** and attach it to the component you want to grab. This is one interaction point in you're actor. Move it in the viewport to the location where the interaction and grabbing should happen. (If using GrabCircleMode = Attach point this is the location where the grab circle is drawn).
 3. Add a **BP Right Aligner** and attach it to this interaction base component. You can move and rotate the aligner as you would like to attach/grab the actor with the hand.
 4. Setup the grab pose: Eather use Animation mode **Static Animation** or **Aligner Animation**. 
-    - If using **Static Animation** you need to define an **Animation Data** data asset in which the predefined animations are defined.
+    - If using **Static Animation** you need to define an **Animation Data** data asset in which the predefined animations are setup.
     - If using **Aligner Animation** click on the aligner component and under settings you can setup the pose by adjusting the finger value sliders. The hand visualizer will directly show the final grab pose.
 
-<img src="./images/ExampleAligner.png" style="width: 65%;">
+
+<p>
+<img src="./images/ExampleAligner.png" style="width: 45%;">
+<img src="./images/OtherAlignerMat.png" style="width: 45%;">
+<p>
+
+
+>**Note:** You can change the material of the aligner component in the details panel of it and use e.g the original hand material: **MI_Quinn_02** or any other material which suits you.
 
 **Mirroring Left Hands**
 --
@@ -288,7 +303,13 @@ You can visualize a preview of the mirrored left hand class by adding the method
 
 >**Note:** The **aligner index** is set by the hierarchy of the aligners attached to the interaction base component. So the first right hand aligner (upper one) has index 0, the next one index 1, etc... If left aligners are also attached it's the same counting, but for both only count the same types (left or right). You can also check the aligner index from the construction script with the method `GetAlignerIndex()` in the aligner component. 
 
->**Important:** The preview methods and using the aligner component references only works in the construction script. It's not intended to be used in gameplay. The aligners get destroyed OnBeginPlay.
+>**Important:** The **preview methods** (under category: construction script only) and using the aligner component references only works in the construction script. It's not intended to be used in gameplay. The aligners get destroyed OnBeginPlay.
+
+> :exclamation: **Important**
+
+**Mirroring Left Hands**
+--
+
 
 ### 4.2 Pull Grab
 
