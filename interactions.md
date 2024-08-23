@@ -258,7 +258,37 @@ More information for the **Collision** and **ComponentsHit** settings can be fou
 <img src="./images/UsefulFuncGrabHandler.png" style="width: 65%;">
 
 ### 4.1.2 Interaction component
+------
+
 How to use it, needed components: interaction solver component, aligner components, aligner poses, dev tools: visualising flip/mirror preview, using gizmos, two hand stuff, physical settings, how to use button inputs,..
+
+The interaction point system enables even more control for grabbing and access to input events. It should be used whenever complex interactions are required.
+
+To use interaction points you need to do the following steps:
+1. Add the **Interaction Solver Component** to you're actor.
+2. Add the **Interaction Base Component** and attach it to the component you want to grab. This is one interaction point in you're actor. Move it in the viewport to the location where the interaction and grabbing should happen. (If using GrabCircleMode = Attach point this is the location where the grab circle is drawn).
+3. Add a **BP Right Aligner** and attach it to this interaction base component. You can move and rotate the aligner as you would like to attach/grab the actor with the hand.
+4. Setup the grab pose: Eather use Animation mode **Static Animation** or **Aligner Animation**. 
+    - If using **Static Animation** you need to define an **Animation Data** data asset in which the predefined animations are defined.
+    - If using **Aligner Animation** click on the aligner component and under settings you can setup the pose by adjusting the finger value sliders. The hand visualizer will directly show the final grab pose.
+
+<img src="./images/ExampleAligner.png" style="width: 65%;">
+
+**Mirroring Left Hands**
+--
+
+You can only setup the right aligner and use `Mirror All Right Hands = true`. Ensure the `Mirror Aligner Class` is set to **BP_LeftAligner**. For normal mirroring of the left hand let `HandMirrorFixedPosition = None`. If you want to have other mirroring axes you can choose one.
+
+<img src="./images/MirrorSetting.png" style="width: 85%;">
+
+You can visualize a preview of the mirrored left hand class by adding the method `PreviewMirrorAligner(int AlignerIndex)` with specifying a specific aligner by it's index or `PreviewMirrorAllAligners()` to show them for all aligners atached to this interaction base component. 
+
+<img src="./images/PreviewMirrorAll.png" style="width: 65%;">
+<img src="./images/PrevMirrorAligner.png" style="width: 70%;">
+
+>**Note:** The **aligner index** is set by the hierarchy of the aligners attached to the interaction base component. So the first right hand aligner (upper one) has index 0, the next one index 1, etc... If left aligners are also attached it's the same counting, but for both only count the same types (left or right). You can also check the aligner index from the construction script with the method `GetAlignerIndex()` in the aligner component. 
+
+>**Important:** The preview methods and using the aligner component references only works in the construction script. It's not intended to be used in gameplay. The aligners get destroyed OnBeginPlay.
 
 ### 4.2 Pull Grab
 
