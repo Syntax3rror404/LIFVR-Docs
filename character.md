@@ -39,7 +39,8 @@ To change the default mapping create your own Input Mapping Context or change th
 
 <img src="./images/DefaultMappingSetting.png" style="width: 90%;">    
 
-> **_NOTE:_** If you can't find the LIFVR Content in the content browser, you need to enable ```Show Plugin Content``` in the content browser settings (see [FAQ](/FAQ.md)) !
+> [!NOTE]
+> If you can't find the LIFVR Content in the content browser, you need to enable ```Show Plugin Content``` in the content browser settings (see [FAQ](/FAQ.md)) !
 
 **Enhanced Input Actions**:
 
@@ -123,7 +124,8 @@ You have the oportunity to add logic to the methods by two ways:
 
     e.g. OverrideBPress = True
 
-> **_NOTE:_** This will also induce that in interaction points this specific event doesn't fire anymore.
+> [!WARNING]
+> This will also induce that in interaction points this specific event doesn't fire anymore.
 
     Further it's possible to disable Index Grab (grabbing with trigger button) completely by setting OverrideIndexGrabRight/Left = True. Note that if you disable this feature you can also not use the other features which depend on loose grabbing! (so this is not recommended).   
 
@@ -135,11 +137,13 @@ Key characteristics like the body proportions of the Hexa Physics Rig and the He
 
 During calibration, the HMD automatically adjusts the height to match the virtual character height as defined in the data asset. This method is called once at the beginplay or after the player puts on the headset. Calibration can also be adjusted in the **MainMenu** under **Character** (to open the main menu press the menu button on the controller). The reference point for the HMD is floor level.
 
-> **_NOTE:_** If you encounter issues where the HexaPhysicsRig does not initialize correctly, check that your guardian is set up properly and the floor level is tracked accurately.
+> [!TIP]
+> If you encounter issues where the HexaPhysicsRig does not initialize correctly, check that your guardian is set up properly and the floor level is tracked accurately.
 
 Currently, other character features like strength, jump strength, speed, etc., are not automatically adjusted by these proportions. In the future, there will be the possibility to enable automatic physics-based calculations for these features.
 
-> **_NOTE:_** Be aware that changes made in the proportions may also change the behavior of the character because everything is physics based.
+> [!WARNING]
+> Be aware that changes made in the proportions may also change the behavior of the character because everything is physics based.
 
 The second character data asset is the **CrouchConfigDA** in this data asset it's possible to control the positions (height and backward leaning) of the character for the different crouch levels. For each crouch level, you can define where the pelvis should be. Be aware that changes made here may also impact and change the behavior like the jump height, for example, if physical jumping is used. For a customized version, it's recommended to create a child or duplicate of the **DefaultCrouchConfigDA** so that you always have the default one as a backup.
 
@@ -241,7 +245,8 @@ To rotate the character from logic you can use the `RotateRigSmooth(float angle)
 
 Climbing works practically out of the box. Because the hands are physically connected to the character, to enable climbing it's only needed to give the climb able actor a grab tag (grabbing actor settings (see [VR Physics Hands](/hands.md))). Because the physics rig is quite heavy by default to be more stable for climbing it automaticly adjusts the weight to climb more easily. It also automaticly increases the AutoReleaseThreshold of the hands, so that the character does not auto release while climbing that easily. The character can automaticly climb crouch. This is triggered if the character tries to go over a ledge. It's possible to enable ```bAlwaysClimbCrouch``` (can also be set in the main menu: controls). Than it will always crouch when climbing.
 
-> **_NOTE:_** Always climb crouch can be not completely stable, because it has to detect if it's climbing based on the hands state as well if the character touches the ground. So it can happen in a situation that it starts to climb crouch when it's not really desired for. A better way if one wants to use this is to use the optional ```climb tag```. In this way one has precise control in which situations it should automaticly crouch and when not.
+> [!WARNING]
+> Always climb crouch can be not completely stable, because it has to detect if it's climbing based on the hands state as well if the character touches the ground. So it can happen in a situation that it starts to climb crouch when it's not really desired for. A better way if one wants to use this is to use the optional ```climb tag```. In this way one has precise control in which situations it should automaticly crouch and when not.
 
 **Settings**
 
@@ -280,7 +285,8 @@ The height and pelvis position for the crouch levels is defined in the Crouch Co
 
 <img src="./images/DefaultCrouchConfig.png" style="width: 100%;">
 
-> **_NOTE:_** Changes in the crouch config will affect the physical behavior of the character, because everything is physics based. E.g. leaning more backwards with the pelvis position can lead the character to jump more in the forward direction. So you can try customizations, but it's recommendet to always have the original **DA_DefaultCrouchConfig** as backup.
+> [!WARNING]
+> Changes in the crouch config will affect the physical behavior of the character, because everything is physics based. E.g. leaning more backwards with the pelvis position can lead the character to jump more in the forward direction. So you can try customizations, but it's recommendet to always have the original **DA_DefaultCrouchConfig** as backup.
 
 **Settings**
 
@@ -323,7 +329,8 @@ The character crouches automaticly if it's head is blocked above for all objects
 > [!IMPORTANT]
 > For the system to work it's important that the object blocks the VRPhysicsPawn collision channel. By default everything is set to block the character.
 
-> **_Note:_** To enable automatic crouching and adjustments for a physics body component you need to add the AutoCrouchTag (Default value = "autocrouch") eather as component tag or as actor tag. You can change the tag names in the DA_TagConfig. In this way it's ensured the automatic crouching is really only triggered if wanted and not for example while hiding in a locker or from grabbed physics actors.
+> [!NOTE]
+> To enable automatic crouching and adjustments for a physics body component you need to add the AutoCrouchTag (Default value = "autocrouch") eather as component tag or as actor tag. You can change the tag names in the DA_TagConfig. In this way it's ensured the automatic crouching is really only triggered if wanted and not for example while hiding in a locker or from grabbed physics actors.
  
 #### Jumping
 ------------------------
@@ -375,13 +382,15 @@ When the IA_Jump action is started it calls the `JumpingStart()` method, which t
 
 After the landing when the interpolation is also done for standinf up the **OnJumpingFinished** Event fires.
 
-> **_Note:_** The Crouch landing also works without jumping before, so for example if falling down.
+> [!NOTE]
+> The Crouch landing also works without jumping before, so for example if falling down.
 
 The landing hit fires the OnLanding event (see BP_HexaCharacter event graph). This does also fire if `bUseCrouchLanding = False`. You can access the entire Hit result, as well as the adjusted impact force and if the landing occured after a jump or not. This is for example useful in gameplay to check if the impact force was to high to kill the character or breaking bones.
 
 <img src="./images/LandingEvent.png" style="width: 60%;">
 
-> **_Note:_** Because this jumping is completely based on physics the character proportions, the crouch configuration and the crouch speed have an impact on the jumping.
+> [!WARNING]
+> Because this jumping is completely based on physics the character proportions, the crouch configuration and the crouch speed have an impact on the jumping.
 
 **Overview of all setting variables for jumping**
 
@@ -465,7 +474,8 @@ If the ground has a physical material with low or no friction the HexaPhysicsRig
 
 To enable that the HexaCharacter rotates automaticly with a rotating floor you only need to set the rotating floor tag `rotate` (default FName) in the actor or rotating components. If everything in the actor rotates use the actor tag, otherwise set the component tag of the specific component which rotates. See examples: `BP_Rotating_Platforms` in the content browser under Plugin/LIFVR Content/Blueprints/LevelArchitecturePhysics. 
 
-> **_Note:_** You can change this tag value in the **DA_TagConfig** in the content folder: Plugins/LIFVR/LIFVR Content/Blueprints/Core.
+> [!NOTE]
+> You can change this tag value in the **DA_TagConfig** in the content folder: Plugins/LIFVR/LIFVR Content/Blueprints/Core.
 
 
 <img src="./images/RotatingGround.png" style="width: 70%;">
@@ -492,7 +502,8 @@ The Hexa Character includes a Vignette child actor component (BP_ViewVignette / 
 | **Use Ease in Out Vignette**     | Determines whether the vignette transition uses an easing function to appear and disappear (default: linear). |
 
 
-> **_NOTE:_** Teleportation will be added in the next update.
+> [!NOTE]
+> Teleportation will be added in the next update.
 
 ### 2.5 Slow Motion Mode
 The character features an integrated slow motion mode, similar to what is seen in Bonelabs/Boneworks. By pressing the right thumbstick, this mode can be activated. Quick successive presses can further slow down the time. After a threshold time (variable: `SlowMotionPressThreshold`), which needs to be maintained between the thumbstick presses, another press will deactivate the slow motion.
@@ -513,7 +524,8 @@ In the details panel of the Hexa Character under Settings -> Slow  Motion, you c
 | **Maximaltimedilation**    | Lower bound for the time dilation value. |
 
 
-> **_NOTE:_** Be aware that the slow motion mode can also affect physical calculations.
+> [!WARNING]
+> Be aware that the slow motion mode can also affect physical calculations.
 
 You can retrieve the current slow motion time dilation for any actor placed in the world by using the node `GetActorTimeDilation`. For example, see how this is implemented for the shooting sound in **BP_SimpleGun**.
 

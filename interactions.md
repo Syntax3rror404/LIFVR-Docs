@@ -293,7 +293,8 @@ To use interaction points you need to do the following steps:
 <p>
 
 
->**Note:** You can change the material of the aligner component in the details panel of it and use e.g the original hand material: **MI_Quinn_02** or any other material which suits you.
+> [!NOTE]
+> You can change the material of the aligner component in the details panel of it and use e.g the original hand material: **MI_Quinn_02** or any other material which suits you.
 
 **Mirroring Left Hands**
 --
@@ -307,7 +308,8 @@ You can visualize a preview of the mirrored left hand class by adding the method
 <img src="./images/PreviewMirrorAll.png" style="width: 65%;">
 <img src="./images/PrevMirrorAligner.png" style="width: 70%;">
 
->**Note:** The **aligner index** is set by the hierarchy of the aligners attached to the interaction base component. So the first right hand aligner (upper one) has index 0, the next one index 1, etc... If left aligners are also attached it's the same counting, but for both only count the same types (left or right). You can also check the aligner index from the construction script with the method `GetAlignerIndex()` in the aligner component. 
+> [!NOTE]
+> The **aligner index** is set by the hierarchy of the aligners attached to the interaction base component. So the first right hand aligner (upper one) has index 0, the next one index 1, etc... If left aligners are also attached it's the same counting, but for both only count the same types (left or right). You can also check the aligner index from the construction script with the method `GetAlignerIndex()` in the aligner component. 
 
 > [!IMPORTANT]
 > The **preview methods** (under category: construction script only) and using the aligner component references only works in the construction script. It's not intended to be used in gameplay. The aligners get destroyed OnBeginPlay.
