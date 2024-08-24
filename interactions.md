@@ -174,7 +174,8 @@ With interaction points and the interaction solver you can choose between differ
 <img src="./images/StaticAnimationMode.png" style="width: 45%;">
 <p>
 
->**_Note:_** For more information see section **Interaction Solver and Points**.
+>[NOTE]
+>For more information see [here](#412-interaction-component)
 
 ### Grabbing indicators (grab circle and animations)
 ------
