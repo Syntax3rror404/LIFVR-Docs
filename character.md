@@ -5,13 +5,13 @@
 
 ### _Table of Contents_
 ---
->:family: [Character Hierarchy and Structure(#21-character-hierarchy-and-structure)
+>:family: [Character Hierarchy and Structure](#21-character-hierarchy-and-structure)
 
 >:control_knobs: [(Enhanced) Inputs and Mapping](#22-enhanced-inputs-and-mapping)
 
 >:file_folder: [Character Data (Data Assets)](#23-character-data-data-assets)
 
->:running: [Locomotion: LuminaVRMovementComponent(#24-locomotion-luminavrmovementcomponent)
+>:running: [Locomotion: LuminaVRMovementComponent](#24-locomotion-luminavrmovementcomponent)
 
 >:collision: [Character Collisions](#23-character-collisions)
 
