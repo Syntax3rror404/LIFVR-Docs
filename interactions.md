@@ -327,6 +327,47 @@ The interaction system (consisting of the interaction base component, interactio
 > [!TIPP]
 > If using many aligners in one interaction point it can get confusing, but you can simply set the visibility of each aligner you don't need currently to adjust to false in their details panel.
 
+**Interaction Point Grab Events**
+--
+
+You can use the following events which are triggered by grabbing or releasing the interaction point. You can find them in the interaction points details panel `Events`.
+
+<img src="./images/GrabEventsInt.png" style="width: 95%;">
+
+Furthermore each interaction points tracks the time since the grab of the interaction point occured. You can access it through `GetGrabDuration()` in the interaction point reference or adding the event: `OnGrabTimeUpdate` (continous update).
+
+<img src="./images/GrabDuration.png" style="width: 45%;">
+
+**Inputs**
+--
+
+The input events trigger, button presses, releases are passed to the interaction point events in which you can drive logic with them. 
+
+<img src="./images/IntInputEvents2.png" style="width: 95%;">
+
+<img src="./images/IntInputEvents.png" style="width: 45%;">
+
+You have also access to the thumbstick update values splitted to the x and y axis. You can override the default locomotion actions, which would be triggered through these inputs, while grabbing this interaction point and triggering the thumbstick inputs. Simply set the booleans `OverrideThumbstick X` and/or `OverrideThumbstick Y` to true. You can find these under `Settings -> Input -> Thumbstick` in the interaction base component.
+
+<img src="./images/IntThumbstick.png" style="width: 55%;">
+
+**Further settings:**
+
+For the inputs exist the following settings:
+
+<img src="./images/IntInput.png" style="width: 70%;">
+
+
+- **Time Thresholds:** Block the input actions for the specified time after grabbing of this interaction point starts. After this time has elapsed the input actions will fire normally. This is only blocked for the first grab of this interaction point not the second one if both hand grab is enabled for this interaction point. (This is for example used in the **BP_SimpleGun** to prevent shooting accidentally on grab).
+
+- **Use Trigger Strength Threshold**: For the trigger input you can additionally define to use a strenght threshold. The Trigger pressed event will only fire once if the trigger is pressed strong enough. The continous trigger event will not be changed by this setting (see **BP_SimpleGun**).
+
+**Useful functions**
+--
+
+<img src="./images/IntFuncs2.png" style="width: 100%;">
+
+
 **Mirroring Left Hands**
 --
 
@@ -403,29 +444,102 @@ You can enable free grabbing along an axis segment (referenced to the interactio
 
 You can enable free rotation offset around an axis (referenced to the interaction point) for grabbing. This is also enabled in the **BP_Crowbar**.
 
-**Flip Hand Pose**
+**Flip Hand**
 --
+
+You can enable to flip the hand aligner pose by 180 degree to fit the real hand position better. 
 
 **Physics Settings**
 --
+<img src="./images/PhysicsSettings.png" style="width: 65%;">
+
+In the physics settings you can enable and setup loose grabbing for this interaction point. Furthermore it's possible to allow free linear or angular movement while grabbing this interaction point. If enabled, linear or angular movements of the controller will not affect the grabbed actor.
+
+| Variable Name                            | Type | Description                                                                                                                                        |
+|-------------------------------------|---------------|----------------------------------------------------------------------------------------------------------------------------------------------------|
+| **Free Linear Movement**            | Boolean       | If enabled, while grabbing linear movement of the controller will have no affect.                                                                   |
+| **Free Angular Movement**           | Boolean       | If enabled, while grabbing angular movement (rotations) of the controller will have no affect.                                                     |
+| **Use Loose Grab**                  | Boolean       | Enable or disable loose grabbing (with index finger grab) if grabbing this interaction point.                                                      |
+| **Allow Two Hand Loose Grab**       | Boolean       | Allow or prohibit loose grab while grabbing the actor with two hands. By default this is disabled. Useful in some configurations.                   |
+| **Loose Grab Strength**             | Float         | If loose grab is enabled this defines how `loose` the object is grabbed (freedom of the actors movement). Higher numbers mean it's more `loose`.    |
+| **Use Loose Rotation**              | Boolean       | Besides loose grab which gives some linear freedom, you can also enable loose rotation. This feature is only triggered on collisions of the actor.  |
+| **Loose Rotation Strength**         | Float         | This defines the strength of the loose rotation effect. Higher numbers mean it has more angular freedom.                                           |
+| **Loose Grab Position Offset Strength** | Float      | For position offset with loose grab the effect strength can be adjusted additionally with this variable, as higher loose strength is typically required. |
+
 
 **Animation**
 --
 
-**Pull Grab**
+You have the same settings for animations in each interaction point as in the **Grab Handler Component** ([here](#411-grab-handler-component)). 
+
+>[IMPORTANT]
+>If using interaction points and the grab handler in a actor. The interaction point settings will always override the grab handler settings, which exist in both components.
+
+<img src="./images/IntAnim.png" style="width: 75%;">
+
+For interaction points you can decide between three animation modes: 
+
+|            |                                                                                                        |
+|-----------------------|---------------------------------------------------------------------------------------------------------------|
+| **Aligner Animation** | Setup the hand pose by defining the finger values in the Aligner component attached to this interaction point. |
+| **Static Animation**  | Create a DA_AnimationData data asset and define the different animation sequences in there.                   |
+| **Basic Poser**       | Use the basic poser with traces. You don't need to setup anything.                                            |
+
+Further informations about the animations can be found [here](#grabbing-animations--poses).
+
+
+
+**Pull Grab Priority**
 --
+
+You can set a priority `Pull Priority` to interaction points so that they are prefered to be grabbed after pulling. Higher means they are prefered. You can find them in the interaction points `Settings -> Pull Grab`.
+
 
 **Grab Circle**
 --
 
-**Inputs**
---
+You can define different modes for the grab circle for each interaction point. For fixed attachments as typically with the interaction point the mode `Attach Point` is recommended. For interaction points with position offset fits `Flex Center`. In general for the basic poser grabbing `Surface` or `Fix Center` works well.
+
+For more informations see [here](#grab-circle).
+
 
 **Sound**
 --
+In the interaction point you have, as in the **Grab Handler Component**, the possibility to define actor specific grab and release sounds. Additionally you can define and customize sounds for the input actions (buttons).
+
+<img src="./images/IntSound.png" style="width: 80%;">
+
+>[IMPORTANT]
+>If using interaction points and the grab handler in a actor. The interaction point settings will always override the grab handler settings, which exist in both components.
 
 **Effects**
 --
+
+<img src="./images/IntEffect.png" style="width: 80%;">
+
+You can enable haptic feedback on input actions (button presses). Furthermore you can enable `Override Index Grab Effect`. If enabled no haptic feedback and grab sound will be triggered if already grabbing the actor with middle fingers grab and pressing the trigger button (normally indicating index grab). If you want to disable the index grabbing for an interaction point and/or use the trigger input otherwise this is useful.
+
+**Switch Grab Poses**
+--
+
+You can switch poses triggered by inputs for example as in the **BP_Dagger**. There it is shown how you can write explicit logic to trigger the switch. Basicly you only need to call `SwitchGrabPose()` in the hand which is currently grabbing and defining the aligner by it's index. It will return true if the switch was successful.
+
+>[NOTE]
+> This works best with the `Aligner Animation` mode if you really want to have changes in the pose itself (other finger values). If using static animation it will use the same predefined animations but switch the hand transforms based on how the aligners are placed.
+
+<p>
+<img src="./images/HandSwitchPose.png" style="width: 40%;">
+<img src="./images/TogglePoses.png" style="width: 40%;">
+<p>
+
+If you only want to toggle between two hand poses while grabbing you can use this function: `TogggleHandPose(Enum HandsToSwitch, int DefaultHandPose, int HandPoseToSwitchTo)`. Switches are only allowed if not currently grabbing this interaction point with both hands. If it was successfull it will return `true`.
+
+-  **HandsToSwitch**: Restrict the pose switch to only one hand type (left/right) or allow both hand types.
+-  **DefaultHandPose**: Define the hand pose by setting here the Aligner Index of the aligner pose you want to use. (Typically you should set here you're default grabbing pose, but it works also if you set it the other way).
+-  **HandPoseToSwitchTo***: The second pose for the switch, also defined by it's aligner index.
+
+>[NOTE]
+>If the aligner index is out of bounds, because not enough aligners are attached to the interaction base component as specified, it will return false.
 
 ### 4.2 Pull Grab
 
