@@ -294,15 +294,26 @@ The interaction system (consisting of the interaction base component, interactio
 | **Aligner Component**          | Hand visualizer       | Visualizer of the hand and specifying the exact transform to pose the hand on grab. If using Aligner animation mode, this also defines the animation pose by defining the finger data. Each interaction point needs at least one right hand aligner component (BP RightAligner). You can have multiple Aligners attached to one interaction point. |
 | **Interaction Solver Component**| Management system     | Management system for all interaction points in an actor. Actor component, which manages the handling between the different interaction points in an actor, like returning the interaction point with highest priority to grab or to register if the actor is holding by two hands on different interaction points. You need one interaction solver component in each actor using the interaction system. |
 
+## Guide to Use Interaction System
 
-To use interaction points you need to do the following steps:
-1. Add the **Interaction Solver Component** to you're actor.
-2. Add the **Interaction Base Component** and attach it to the component you want to grab. This is one interaction point in you're actor. Move it in the viewport to the location where the interaction and grabbing should happen. (If using GrabCircleMode = Attach point this is the location where the grab circle is drawn).
-3. Add a **BP Right Aligner** and attach it to this interaction base component. You can move and rotate the aligner as you would like to attach/grab the actor with the hand.
-4. Setup the grab pose: Eather use Animation mode **Static Animation** or **Aligner Animation**. 
-    - If using **Static Animation** you need to define an **Animation Data** data asset in which the predefined animations are setup.
-    - If using **Aligner Animation** click on the aligner component and under settings you can setup the pose by adjusting the finger value sliders. The hand visualizer will directly show the final grab pose.
+| **Step 1: Add the Interaction Solver Component** |
+|--------------------------------------------------|
+| Attach the **Interaction Solver Component** to your actor. |
 
+| **Step 2: Set Up an Interaction Base Component** |
+|--------------------------------------------------|
+| Add an **Interaction Base Component** and attach it to the component you wish to be grabbable. This acts as one interaction point in your actor. Position it in the viewport at the location where interaction and grabbing should occur. If using `GrabCircleMode = Attach point`, this is where the grab circle will be drawn. |
+
+| **Step 3: Configure a BP Right Aligner** |
+|------------------------------------------|
+| Attach a **BP Right Aligner** to the interaction base component. Move and rotate the aligner to fit how you want the actor to be grabbed by the hand. |
+
+| **Step 4: Setup the Grab Pose** |
+|---------------------------------|
+| Choose between **Static Animation** and **Aligner Animation** for setting up the grab pose:<br>- **Static Animation:** Define an **Animation Data** data asset where the predefined animations are configured.<br>- **Aligner Animation:** Click on the aligner component, and under settings, adjust the finger value sliders to set up the pose. The hand visualizer will display the final grab pose. |
+
+> [!IMPORTANT]
+> With Interaction Points you don't need an additional `grab tag`. Then it will be only using the interaction points in the actor to grab. If you want to allow additional normal grabbing place again the `grab tag`. It will then use the interaction point if it close to it and allowed to grab there. Otherwise it will use the normal grabbing system. (See for an example **BP_SimpleGun**).
 
 <p>
 <img src="./images/ExampleAligner.png" style="width: 45%;">
@@ -312,6 +323,9 @@ To use interaction points you need to do the following steps:
 
 > [!NOTE]
 > You can change the material of the aligner component in the details panel of it and use e.g the original hand material: **MI_Quinn_02** or any other material which suits you.
+
+> [!TIPP]
+> If using many aligners in one interaction point it can get confusing, but you can simply set the visibility of each aligner you don't need currently to adjust to false in their details panel.
 
 **Mirroring Left Hands**
 --
@@ -331,9 +345,87 @@ You can visualize a preview of the mirrored left hand class by adding the method
 > [!IMPORTANT]
 > The **preview methods** (under category: construction script only) and using the aligner component references only works in the construction script. It's not intended to be used in gameplay. The aligners get destroyed OnBeginPlay.
 
-**Mirroring Left Hands**
+**General Grab Settings**
+--
+<img src="./images/GeneralGrabSettings.png" style="width: 65%;">
+
+| Variable Name                | Type        | Description |
+|------------------------------|-------------|-------------|
+| **Allow Both Hand Grab**     | Boolean     | Enable or disable grabbing this interaction point with both hands at the same time. |
+| **Allowed Hands**            | Enumeration | Choose which hand can grab this interaction point: Right hand, Left hand, or both hands. |
+| **Grab Priority**            | Integer     | In default, the nearest interaction point to the hand is selected if the distance is smaller than the Max Grab Distance. Define custom priorities for interaction points to change this. Higher values indicate a higher priority to be grabbed. **Important**: to enable this, you need to set `Override with Grab Priority = True` in the interaction solver component in the **Settings** category. |
+| **Allow Grab**               | Boolean     | Allow or prohibit grabbing of this interaction point. Useful in gameplay. |
+| **Max Grab Distance**        | Float       | Define the maximum distance at which the hand must be to allow grabbing of this interaction point. |
+
+
+> :gear: **Developer Tool:**
+> You can visualize the distance in the viewport by enabling: `Draw Max Grab Area` in the category `Settings -> Grab -> Dev`.
+
+<img src="./images/MaxGRabVis.png" style="width: 35%;">
+
+> :gear: **Developer Tool:**
+> In default all developer gizmos (visualizer) get destroyed on begin play. If you want to disable this, you can set: `Destroy Gizmos In Game = False` under `Settings -> Grab -> Dev`.
+
+**Two Hand Grab**
+--
+<img src="./images/TwoHand.png" style="width: 65%;">
+
+Specific for handling grabbing an actor with two hands there are additional settings you can define. One system is to define a dominating hand. The interaction point with a higher `dominance priority` will set the grabbing hand as the dominating one if two hands are holding this actor. The dominating hand has more impact on movement and handling of the actor than the other hand.
+
+| Variable Name                | Type        | Description |
+|------------------------------|-------------|-------------|
+| **Override Sec Grab Aligner** | Boolean     | Normally an interaction point will always use the first attached aligner component pose (index 0 (right/left)). If you have attached two or more aligners of the same type (typically 2 right hand aligners) to one interaction point you can enable this setting. Then if both hands are grabbing this interaction point, the second hand will adjust its position/pose and use the specified one of the other aligner. If you also want to have different finger values for the pose, you need to use the Aligner Animation Mode. (Allow Both Hand Grab has to be enabled). |
+| **Override Sec Grab Aligner** | Integer     | Define here which aligner (defined by its index) should be used for the adjusted pose. |
+| **Use Dominating Hand**      | Boolean     | Enable the dominating hand mechanism (as seen in the example BP_Gun). |
+| **Dominance Priority**       | Integer     | Set here an integer value to define which interaction point should trigger the dominating hand. A higher value means higher priority. |
+| **Only Allow Second Grab**   | Boolean     | You can block an interaction point to be only allowed to grab if the actor is already held with another hand. |
+
+**Position Offset**
+--
+<img src="./images/PositionOffset.png" style="width: 65%;">
+
+You can enable free grabbing along an axis segment (referenced to the interaction point) of the actor. The settings for this can be found in the interaction component under `Settings -> Grab -> PositionOffset`. One example for this is the **crowbar** (see **BP_Crowbar**).
+
+| Variable Name          | Type        | Description |
+|------------------------|-------------|-------------|
+| **General Settings**   |             |             |
+| **Allow Position Offset** | Boolean     | Enable or disable the position offset. |
+| **Position Offset Type**  | Enumeration | Define along which axis the offset should be allowed. This is always seen from the interaction point axis system. |
+| **Max Position Offset**   | Float       | Define the range on which it should be allowed to grab. **Important:** the interaction point should be placed in the center of the axis segment and the range here is the distance to one side. So the total range will be `2 * Max Position Offset`. |
+| **Developer Tool/Visualizer** |             |             |
+| **Draw Position Gizmo** | Boolean     | You can enable and disable to draw the gizmo for the position offset. By default, this is enabled and will be shown if `Allow Position Offset` is enabled. |
+| **Position Arrow Size**   | Integer     | You can also adjust the size of the Position Gizmo to be visible for any mesh proportions. |
+
+<img src="./images/CrowbarOffset.png" style="width: 25%;">
+
+**Free Rotation**
 --
 
+You can enable free rotation offset around an axis (referenced to the interaction point) for grabbing. This is also enabled in the **BP_Crowbar**.
+
+**Flip Hand Pose**
+--
+
+**Physics Settings**
+--
+
+**Animation**
+--
+
+**Pull Grab**
+--
+
+**Grab Circle**
+--
+
+**Inputs**
+--
+
+**Sound**
+--
+
+**Effects**
+--
 
 ### 4.2 Pull Grab
 
