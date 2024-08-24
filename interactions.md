@@ -3,7 +3,7 @@
 ## 4. Interactions with objects
 ---
 
-### Table of Contents
+### _Table of Contents_
 ---
 >:collision: [Collision Solver Component](#40-collision-solver-component)
 
