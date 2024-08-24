@@ -18,7 +18,7 @@
 
 
 ### 4.0 Collision Solver Component
-This component handles more complex collisions between actors, like "soft/normal" collisions (will fire every custom tick (defined in variable: ) as long the collision is occurung / the actor touches another object) or hard collision (fires once if a threshold of the collision strength is hit) and also registers the end of the collision (fires once). (Note: The end of the collision is not completely stable and sometimes chaos collision ends are missed to track. Hope this gets better with the developement of chaos, but also work in progress to improve this).
+This component handles more complex collisions between actors, like "soft/normal" collisions (will fire every custom tick (defined in variable: ) as long the collision is occurung / the actor touches another object) or hard collision (fires once if a threshold of the collision strength is hit) and also registers the end of the collision (fires once).
 
 > [!IMPORTANT]
 > At least one primitive component in the actor needs to simulate physics, has collision enabled and `Simulation Generates Hit Events`  enabled. Otherwise the collision solver can't track collisions and the events will not fire.
@@ -159,7 +159,8 @@ With interaction points and the interaction solver you can choose between differ
 - **Static Animation**: You can define fixed animations, which you need to have already created and saved in a data asset of the type **HandAnimControlDA** (`Plugins/LIFVR Content/Blueprints/Animations/Hands/AnimationsData`).
 - **Basic Poser**: The default basic tracer poser.
 
->**_Note:_** You always only need to create animations for the right hand and they will automaticly work as well for the left hand.
+> [!NOTE]
+> You always only need to create animations for the right hand and they will automaticly work as well for the left hand.
 
 **Example actors:** 
 
@@ -526,7 +527,7 @@ You can enable haptic feedback on input actions (button presses). Furthermore yo
 
 You can switch poses triggered by inputs for example as in the **BP_Dagger**. There it is shown how you can write explicit logic to trigger the switch. Basicly you only need to call `SwitchGrabPose()` in the hand which is currently grabbing and defining the aligner by it's index. It will return true if the switch was successful.
 
-> [NOTE]
+> [!NOTE]
 > This works best with the `Aligner Animation` mode if you really want to have changes in the pose itself (other finger values). If using static animation it will use the same predefined animations but switch the hand transforms based on how the aligners are placed.
 
 <p>
