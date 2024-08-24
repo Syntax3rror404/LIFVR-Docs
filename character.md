@@ -6,13 +6,19 @@
 ### Table of Contents
 ---
 2. LIFVR Character
-    - :family: [2.1 Character Hierarchy and Structure](#21-character-hierarchy-and-structure)
-    - :control_knobs: [2.2 (Enhanced) Inputs and Mapping](#22-enhanced-inputs-and-mapping)
-    - :file_folder: [2.3 Character Data (Data Assets)](#23-character-data-data-assets)
-    - :running: [2.4 Locomotion: LuminaVRMovementComponent](#24-locomotion-luminavrmovementcomponent)
-    - :collision: [2.3 Character Collisions](#23-character-collisions)
-    - :dizzy_face: [2.4 Motion Sickness Prevention](#24-motion-sickness-prevention)
-    - :hourglass_flowing_sand: [2.5 Slow Motion Mode](#25-slow-motion-mode)
+    :family: [2.1 Character Hierarchy and Structure](#21-character-hierarchy-and-structure)
+
+    :control_knobs: [2.2 (Enhanced) Inputs and Mapping](#22-enhanced-inputs-and-mapping)
+
+    :file_folder: [2.3 Character Data (Data Assets)](#23-character-data-data-assets)
+
+    :running: [2.4 Locomotion: LuminaVRMovementComponent](#24-locomotion-luminavrmovementcomponent)
+
+    :collision: [2.3 Character Collisions](#23-character-collisions)
+
+    :dizzy_face: [2.4 Motion Sickness Prevention](#24-motion-sickness-prevention)
+    
+    :hourglass_flowing_sand: [2.5 Slow Motion Mode](#25-slow-motion-mode)
 ---
 
 ### 2.1 Character Hierarchy and Structure
