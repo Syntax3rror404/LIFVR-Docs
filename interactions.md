@@ -327,7 +327,7 @@ The interaction system (consisting of the interaction base component, interactio
 > [!NOTE]
 > You can change the material of the aligner component in the details panel of it and use e.g the original hand material: **MI_Quinn_02** or any other material which suits you.
 
-> [!TIPP]
+> [!TIP]
 > If using many aligners in one interaction point it can get confusing, but you can simply set the visibility of each aligner you don't need currently to adjust to false in their details panel.
 
 **Interaction Point Grab Events**
@@ -435,10 +435,13 @@ You can enable free grabbing along an axis segment (referenced to the interactio
 | **General Settings**   |             |             |
 | **Allow Position Offset** | Boolean     | Enable or disable the position offset. |
 | **Position Offset Type**  | Enumeration | Define along which axis the offset should be allowed. This is always seen from the interaction point axis system. |
-| **Max Position Offset**   | Float       | Define the range on which it should be allowed to grab. **Important:** the interaction point should be placed in the center of the axis segment and the range here is the distance to one side. So the total range will be `2 * Max Position Offset`. |
+| **Max Position Offset**   | Float       | Define the range on which it should be allowed to grab. |
 | **Developer Tool/Visualizer** |             |             |
 | **Draw Position Gizmo** | Boolean     | You can enable and disable to draw the gizmo for the position offset. By default, this is enabled and will be shown if `Allow Position Offset` is enabled. |
 | **Position Arrow Size**   | Integer     | You can also adjust the size of the Position Gizmo to be visible for any mesh proportions. |
+
+> [!IMPORTANT]
+> The interaction point should be placed in the center of the axis segment and the range here is the distance to one side. So the total range will be `2 * Max Position Offset`.
 
 <img src="./images/CrowbarOffset.png" style="width: 25%;">
 
@@ -475,8 +478,8 @@ In the physics settings you can enable and setup loose grabbing for this interac
 
 You have the same settings for animations in each interaction point as in the **Grab Handler Component** ([here](#411-grab-handler-component)). 
 
->[IMPORTANT]
->If using interaction points and the grab handler in a actor. The interaction point settings will always override the grab handler settings, which exist in both components.
+> [!IMPORTANT]
+> If using interaction points and the grab handler in a actor. The interaction point settings will always override the grab handler settings, which exist in both components.
 
 <img src="./images/IntAnim.png" style="width: 75%;">
 
