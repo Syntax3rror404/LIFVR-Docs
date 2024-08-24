@@ -5,17 +5,15 @@
 
 ### Table of Contents
 ---
-4. Interactions with objects
+>:collision: [Collision Solver Component](#40-collision-solver-component)
 
-    :collision: [Collision Solver Component](#40-collision-solver-component)
+>:raised_hand: [Grabbing](#41-grabbing)
 
-    :raised_hand: [Grabbing](#41-grabbing)
+>>:gloves: [Grab Handler Component](#411-grab-handler-component)
 
-        :gloves: [Grab Handler Component](#411-grab-handler-component)
+>>:point_up_2: [Interaction Component](#412-interaction-component)
 
-        :point_up_2: [Interaction Component](#412-interaction-component)
-
-    :magnet: [Pull Grab](#42-pull-grab)
+>:magnet: [Pull Grab](#42-pull-grab)
 ---
 
 

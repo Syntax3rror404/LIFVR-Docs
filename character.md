@@ -5,7 +5,6 @@
 
 ### Table of Contents
 ---
-2. LIFVR Character
 
     :family: [Character Hierarchy and Structure](#21-character-hierarchy-and-structure)
 
