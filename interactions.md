@@ -1,13 +1,32 @@
 # Lumina Interaction Framework VR (LIFVR) Documentation
 
 ## 4. Interactions with objects
+---
+
+### Table of Contents
+---
+4. Interactions with objects
+
+    :collision: [Collision Solver Component](#40-collision-solver-component)
+
+    :raised_hand: [Grabbing](#41-grabbing)
+
+        :gloves: [Grab Handler Component](#411-grab-handler-component)
+
+        :point_up_2: [Interaction Component](#412-interaction-component)
+
+    :magnet: [Pull Grab](#42-pull-grab)
+---
+
+
 ### 4.0 Collision Solver Component
 This component handles more complex collisions between actors, like "soft/normal" collisions (will fire every custom tick (defined in variable: ) as long the collision is occurung / the actor touches another object) or hard collision (fires once if a threshold of the collision strength is hit) and also registers the end of the collision (fires once). (Note: The end of the collision is not completely stable and sometimes chaos collision ends are missed to track. Hope this gets better with the developement of chaos, but also work in progress to improve this).
 
 > [!IMPORTANT]
 > At least one primitive component in the actor needs to simulate physics, has collision enabled and `Simulation Generates Hit Events`  enabled. Otherwise the collision solver can't track collisions and the events will not fire.
 
-> **_Note:_** If an actor with skeletal mesh does not trigger the collision events of the collision solver component even with `Simulation Generates Hit Events` enabled, make sure this is also checked in the physics asset of this component in the collision section.
+> [!NOTE]
+> If an actor with skeletal mesh does not trigger the collision events of the collision solver component even with `Simulation Generates Hit Events` enabled, make sure this is also checked in the physics asset of this component in the collision section.
 
 it gives access to the following events:
 
