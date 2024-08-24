@@ -1,6 +1,19 @@
 # Lumina Interaction Framework VR (LIFVR) Documentation
 
-## 2. LIFVR Character
+## **2. LIFVR Character**
+---
+
+### Table of Contents
+---
+2. LIFVR Character
+    - :family: [2.1 Character Hierarchy and Structure](#21-character-hierarchy-and-structure)
+    - :control_knobs: [2.2 (Enhanced) Inputs and Mapping](#22-enhanced-inputs-and-mapping)
+    - :file_folder: [2.3 Character Data (Data Assets)](#23-character-data-data-assets)
+    - :running: [2.4 Locomotion: LuminaVRMovementComponent](#24-locomotion-luminavrmovementcomponent)
+    - :collision: [2.3 Character Collisions](#23-character-collisions)
+    - :dizzy_face: [2.4 Motion Sickness Prevention](#24-motion-sickness-prevention)
+    - :hourglass_flowing_sand: [2.5 Slow Motion Mode](#25-slow-motion-mode)
+---
 
 ### 2.1 Character Hierarchy and Structure
 The base class for the Hexa Character is the **<span style="color: #ADD8E6;">VRControllerCharacter</span>**. This class handles all inputs, including enhanced input actions and mapping contexts.
@@ -160,7 +173,7 @@ Locomotion quick links:
 
 * [Jumping](#jumping)
 
-* [Crouching and TipToe](#crouching)
+* [Crouching and TipToe](#crouching-and-tiptoe)
 
 * [Climbing](#climbing)
 
@@ -282,7 +295,7 @@ Climbing works practically out of the box. Because the hands are physically conn
 | **Climb Strength**           | Define how easily the character can climb. 1 = most easy climb, 0 = heavy to climb. |
 
 
-#### Crouching / TipToe
+#### Crouching and TipToe
 ------------------------
 
 The hexa character can crouch and tip toeing. In the default configuration crouching is triggered by pulling the right thumbstick down and tip toe by pulling it up. If the thumbstick is released while tip toe it automaticly goes back to standing height. The crouching is organized into crouch levels. If you release the thumbstick while crouching it will automaticly go to the nearest crouch level height. The following crouch levels exist.
@@ -502,7 +515,7 @@ To enable that the HexaCharacter rotates automaticly with a rotating floor you o
 
 The character is rotated by smoothly updating it's rotation via the `RotateRigSmoothly(float angle)` function in the LuminaVRMovementComponent. Input for turning are not overriden by this rotation, so the character can still turn manually.
 
-### 2.3 Character collisions
+### 2.3 Character Collisions
 
 ### 2.4 Motion Sickness Prevention
 
