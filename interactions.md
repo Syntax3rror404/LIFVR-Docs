@@ -174,8 +174,8 @@ With interaction points and the interaction solver you can choose between differ
 <img src="./images/StaticAnimationMode.png" style="width: 45%;">
 <p>
 
->[NOTE]
->For more information see [here](#412-interaction-component)
+> [!NOTE]
+> For more information see [here](#412-interaction-component)
 
 ### Grabbing indicators (grab circle and animations)
 ------
@@ -268,7 +268,8 @@ More information for the **Collision** and **ComponentsHit** settings can be fou
 |          | Angular Stabilize Amount | Angular strength multiplier of the second constraint.                                                                                                       |
 |          | Enable PD                | This will enable parent dominates while grabbing (this actor will have no impact on the hexa character). This is still experimental and can lead to unstable physics. |    
 
-> **_Note:_** If `SwitchStrengthOnCollision` is disabled only the **Grab Strength** is used.
+> [!NOTE] 
+> If `SwitchStrengthOnCollision` is disabled only the **Grab Strength** is used.
 
 > [!IMPORTANT]
 > When changing the strength scales it's important to have a descent ratio betweeen the linear and angular strength. If the angular strenght is too high compared to linear strenght, it can lead to strange behavior while grabbing. For example you can not freely move an actor if grabbed with both hands, because the angular strength prohibits it. So if you have cutomized strenght and experiences something like that, try to reduce the angular strength or increase the linear.
@@ -525,7 +526,7 @@ You can enable haptic feedback on input actions (button presses). Furthermore yo
 
 You can switch poses triggered by inputs for example as in the **BP_Dagger**. There it is shown how you can write explicit logic to trigger the switch. Basicly you only need to call `SwitchGrabPose()` in the hand which is currently grabbing and defining the aligner by it's index. It will return true if the switch was successful.
 
->[NOTE]
+> [NOTE]
 > This works best with the `Aligner Animation` mode if you really want to have changes in the pose itself (other finger values). If using static animation it will use the same predefined animations but switch the hand transforms based on how the aligners are placed.
 
 <p>
@@ -539,7 +540,7 @@ If you only want to toggle between two hand poses while grabbing you can use thi
 -  **DefaultHandPose**: Define the hand pose by setting here the Aligner Index of the aligner pose you want to use. (Typically you should set here you're default grabbing pose, but it works also if you set it the other way).
 -  **HandPoseToSwitchTo***: The second pose for the switch, also defined by it's aligner index.
 
->[NOTE]
+> [!NOTE]
 >If the aligner index is out of bounds, because not enough aligners are attached to the interaction base component as specified, it will return false.
 
 ### 4.2 Pull Grab
