@@ -397,10 +397,12 @@ You can visualize a preview of the mirrored left hand class by adding the method
 |------------------------------|-------------|-------------|
 | **Allow Both Hand Grab**     | Boolean     | Enable or disable grabbing this interaction point with both hands at the same time. |
 | **Allowed Hands**            | Enumeration | Choose which hand can grab this interaction point: Right hand, Left hand, or both hands. |
-| **Grab Priority**            | Integer     | In default, the nearest interaction point to the hand is selected if the distance is smaller than the Max Grab Distance. Define custom priorities for interaction points to change this. Higher values indicate a higher priority to be grabbed. **Important**: to enable this, you need to set `Override with Grab Priority = True` in the interaction solver component in the **Settings** category. |
+| **Grab Priority**            | Integer     | In default, the nearest interaction point to the hand is selected if the distance is smaller than the Max Grab Distance. Define custom priorities for interaction points to change this. Higher values indicate a higher priority to be grabbed. |
 | **Allow Grab**               | Boolean     | Allow or prohibit grabbing of this interaction point. Useful in gameplay. |
 | **Max Grab Distance**        | Float       | Define the maximum distance at which the hand must be to allow grabbing of this interaction point. |
 
+> [!IMPORTANT]
+> To enable Grab Priority, you need to set `Override with Grab Priority = True` in the interaction solver component in the **Settings** category.
 
 > :gear: **Developer Tool:**
 > You can visualize the distance in the viewport by enabling: `Draw Max Grab Area` in the category `Settings -> Grab -> Dev`.
@@ -515,8 +517,8 @@ In the interaction point you have, as in the **Grab Handler Component**, the pos
 
 <img src="./images/IntSound.png" style="width: 80%;">
 
->[IMPORTANT]
->If using interaction points and the grab handler in a actor. The interaction point settings will always override the grab handler settings, which exist in both components.
+> [!IMPORTANT]
+> If using interaction points and the grab handler in a actor. The interaction point settings will always override the grab handler settings, which exist in both components.
 
 **Effects**
 --
