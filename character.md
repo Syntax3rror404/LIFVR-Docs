@@ -13,7 +13,7 @@ The base class for the Hexa Character is the **<span style="color: #ADD8E6;">VRC
 | 4.  LuminaVRMovement Component | Handles locomotion logic using Hexa Character and Hexa Physics Rig classes. |
 
 
-The Hexa Character (BP_HexaCharacter) is fully physics-based, enabling interactive VR world experiences. It is heavily inspired by Boneworks/Bonelabs and the VRGK (Virtual Reality Game Kit) character. The character needs a Hexa Physics Rig (BP_HexaPhysRig) to work, which includes basic collision objects connected by physic constraints. This is assigned in the details panel of the character under `Settings/PhysicsRig` in the variable `Physics Rig Class`. There are no changes or customizations necessary to do in the Hexa Physics Rig. A collision solver component tracks collisions of different body parts within the Hexa Physics Rig, driving logic in the Hexa Character. You can find more information about the collision solver component here: [collision solver](/interactions.md#40-collision-solver-component) ([Interactions page](/interactions.md)) and about the character collision handling [here](#23-character-collisions).
+The Hexa Character (BP_HexaCharacter) is fully physics-based, enabling interactive VR world experiences. It is heavily inspired by Boneworks/Bonelabs and the VRGK (Virtual Reality Game Kit) character. The character needs a Hexa Physics Rig (BP_HexaPhysRig) to work, which includes basic collision objects connected by physic constraints. This is assigned in the details panel of the character under `Settings/PhysicsRig` in the variable `Physics Rig Class`. There are no changes or customizations necessary to do in the Hexa Physics Rig. A collision solver component tracks collisions of different body parts within the Hexa Physics Rig, driving logic in the Hexa Character. You can find more information about the collision solver component here: [collision solver](/interactions.md#40-collision-solver-component) and about the character collision handling [here](#23-character-collisions).
 
 Furthermore the Hexa Character needs right and left hand classes assigned of the type BP_VRPhysicsHand (class BP_VRPhysicsHand_Right and any children of it are compatible). These are defined under `Settings/Hands` in the variables `Hand Class R / L`. 
 
@@ -147,8 +147,29 @@ Currently, other character features like strength, jump strength, speed, etc., a
 The second character data asset is the **CrouchConfigDA** in this data asset it's possible to control the positions (height and backward leaning) of the character for the different crouch levels. For each crouch level, you can define where the pelvis should be. Be aware that changes made here may also impact and change the behavior like the jump height, for example, if physical jumping is used. For a customized version, it's recommended to create a child or duplicate of the **DefaultCrouchConfigDA** so that you always have the default one as a backup.
 
 ### 2.4 Locomotion: LuminaVRMovementComponent
+---
 
 The locomotion of the character is managed by the **LuminaVRMovementComponent**. (This is a completely new component within LIFVR, not a child of Epic's movement component.
+
+Locomotion quick links:
+---
+
+* [Moving](#moving) 
+
+* [Turning](#turning)
+
+* [Jumping](#jumping)
+
+* [Crouching and TipToe](#crouching)
+
+* [Climbing](#climbing)
+
+* [Swimming](#swimming)
+
+* [Slopes, Slides and Rotating Ground](#slopes-slides-and-rotating-ground)
+
+---
+
 
 The Hexa Character has the following **movement states**:
 
