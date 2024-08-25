@@ -407,7 +407,7 @@ You can visualize a preview of the mirrored left hand class by adding the method
 > :gear: **Developer Tool:**
 > You can visualize the distance in the viewport by enabling: `Draw Max Grab Area` in the category `Settings -> Grab -> Dev`.
 
-<img src="./images/MaxGRabVis.png" style="width: 35%;">
+<img src="./images/MaxGrabVis.png" style="width: 35%;">
 
 > :gear: **Developer Tool:**
 > In default all developer gizmos (visualizer) get destroyed on begin play. If you want to disable this, you can set: `Destroy Gizmos In Game = False` under `Settings -> Grab -> Dev`.
