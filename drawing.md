@@ -13,7 +13,7 @@ The drawing system has the three following classes:
 - **BP_DrawingBoard**
 - **BP_DrawingEraser**
 
-These can be found in the contetn folder under: `LIFVR Content -> Blueprints -> interactions -> Drawing`.
+These can be found in the content folder under: `LIFVR Content -> Blueprints -> interactions -> Drawing`.
 
 You can use these classes by creating child classes of them or duplication.
 `BP_DrawingBrush` uses the collision solver component to track the collisions on the drawing board to draw the lines. It also shows an example how to use the collision strength from the collision solver component for intensity and color changes. 
