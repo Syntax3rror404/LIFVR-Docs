@@ -365,7 +365,7 @@ To crouch driven from code logic there are two options:
 The character crouches automaticly if it's head is blocked above for all objects with the colliding component beeing not a physisc body. This system uses the HeadOverlap component in the HexaCharacter. If an object overlaps with the HeadOverlap component and is not from object type physics body, the character automaticly crouches. Moreover it's not possible to stand up with inputs if the head is blocked or to jump. If jumping and getting blocked the jumping is immediatly finished. 
 
 > [!IMPORTANT]
-> For the system to work it's important that the object blocks the VRPhysicsPawn collision channel. By default everything is set to block the character.
+> For the system to work it's important that the object blocks the HexaRig collision channel. By default everything is set to block the character.
 
 > [!NOTE]
 > To enable automatic crouching and adjustments for a physics body component you need to add the AutoCrouchTag (Default value = "autocrouch") eather as component tag or as actor tag. You can change the tag names in the DA_TagConfig. In this way it's ensured the automatic crouching is really only triggered if wanted and not for example while hiding in a locker or from grabbed physics actors.
