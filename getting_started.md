@@ -2,12 +2,16 @@
 
 ## 1. Getting Started
 
-1. Enable this plugin in your Unreal Engine project under Plugins -> LuminaInteractionFrameworkVR (You will have to restart the engine after this).
-2. Paste the predefined default project settings from the discord server to replace you're project settings. This will ensure you have the collision channels and physical materials setup correctly in your project and also start with common settings for VR developement.
+1. Enable this plugin in your Unreal Engine project under `Plugins -> LuminaInteractionFrameworkVR` (You will have to restart the engine after this).
+2. Paste the predefined default project settings from the discord server to replace your project settings. This will ensure you have the collision channels and physical surfaces (materials) setup correctly in your project and also start with common settings for VR developement.
+
+**Setup Project Settings:**
+1. Navigate to your project folder.
+2. Navigate into the folder `Config`: replace the `DefaultEngine.ini` and the `DefaultInput.ini` with the ones you can find here: [LIFVR Important Code](https://discord.com/channels/1197557737987518534/1197571941482111130).
 
 ### **How to find the LIFVR Content?**
 
-To see the LIFVR Plugin content, be sure that the plugin is enabled. Further you need to enable `show plugin content` in the settings of the content browser (right upper corner of the content browser). Than you should find the content of LIFVR with the base blueprint classes and examples under `Plugins/LIFVR Content`. 
+To see the LIFVR Plugin content, be sure that the plugin is enabled in your project. Further you need to enable `show plugin content` in the settings of the content browser (right upper corner of the content browser). Than you should find the content of LIFVR with the base blueprint classes and examples under `Plugins/LIFVR Content`. 
 To see the C++ classes you also need to enable `show C++ classes` in the settings of the content browser. The C++ classes can be found under `Plugins/LIFVR C++ Classes`.
 
 <img src="./images/ContentBrowserSettings.png" style="width: 30%;">
