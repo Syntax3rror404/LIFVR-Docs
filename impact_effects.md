@@ -15,7 +15,6 @@ Thhis component uses the collision strength of the impact to define if a VFX or 
 | Debug Mode                  | bool  | Enable debug messages for this component. The current collision strength will be displayed.       |
 
 
-
 Sound effects
 ----
 
@@ -39,16 +38,42 @@ You can define a different sound for each physical surface by adding them in the
 > Currently the component can only check the physical surfaces if you defined them in the materials of the primitive components/meshes. I'm working on an update in which you can also set up the physical materials by using the physical material overrides.
 
 **Sound Effect Settings:** 
-- Collision SFX : Array of sound effects : array containing the sounds to play ordered like the physical surfaces in the project settings. Default: index 0.
-
-
+| Variable                        | Type   | Description                                                                                                       |
+|---------------------------------|--------|-------------------------------------------------------------------------------------------------------------------|
+| Collision SFX                   | Array of Sounds (USoundBase) | Array containing the sounds to play ordered like the physical surfaces in the project settings. Default: index 0. |
+| Collision SFX Attenuation Settings | String | Attenuation setting for all sound effects. (Default: you can use **ATT_CollisionDefaultPreset**).                 |
+| Volume Multiplier               | float  | Multiplier to scale additionally to the collision strength the absolute volume.                                   |
+| Min Delay Between SFX           | float  | This time needs to be between two hits to play the sound. If a hit occurs in between, it will not be played.      |
 
 #### Sound Effects for the  Hexa Character
 ---
 
+Moreover this component can be also used for character sound effects: 
+ 1. **Sound on landing** after falling or jumping. It uses the default body hit sound defined in the `Collision SFX array` variable in the **HexaPhysicsRig**.
+ 2. **Wind sound** if character velocity exceeds a threshold.
+
+> [!NOTE]
+> A threshold `FastVelocityThreshold` to define fast velocities is already in the LuminaVRMovementComponent under  `Settings -> Locomotion -> Velocity` of the wind sound. So this velocity has always be exceeded to trigger the `FastVelocityUpdate` delegate / event dispatcher. The variable `Character Wind Velocity Threshhold` in this component can be used to further adjust it explicit for the sound.
+
+> [!NOTE]
+> LIFVR provides currently no wind sound effect. You need to add your own in the `Character Wind SFX` variable.
+
+**Settings For Character Sound:**
+
+| Variable                            | Type        | Description                                                                                              |
+|-------------------------------------|-------------|----------------------------------------------------------------------------------------------------------|
+| Use Character Wind SFX              | bool        | Enable or disable the wind effect.                                                                       |
+| Character Wind Velocity Threshold   | float       | Additional threshold for the velocity to play the sound besides `FastVelocityThreshold` in the LuminaVRMovementComponent. |
+| Character Wind SFX                  | USoundBase  | Sound to play for wind movement effect.                                                                  |
+| Min Delay Between Wind SFX          | float       | This time has to be elapsed before the next sound can be played.                                         |
+| Landing Collision Scaler            | float       | Here you can scale the collision strength threshold explicitly for the landing sound effect.             |
+
+<img src="./images/ImpactEffectSFXSettings.png" style="width: 70%;">
 
 Visual effects
 ----
+
+
 
 Decals
 ----
