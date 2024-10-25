@@ -3,12 +3,25 @@
 All questions about configuring grabable and interactible objects have a look here: [Grabbing and Interactions with objects](/interactions.md).
 There is explained how to setup grabable objects, fixed grab poses and animation types, loose grabbing, index/middle grab, surface animations and grab circle with modes and much more.
 - [Collision Solver Component](/interactions.md/#40-collision-solver-component)
-- [Grabbing](#41-grabbing)
-- [Grab Handler Component](#411-grab-handler-component)
-- [Interaction Component](#412-interaction-component)
-- [Pull Grab](#42-pull-grab)
+- [Grabbing](/interactions.md/#41-grabbing)
+    - [Grab Handler Component](/interactions.md/#411-grab-handler-component)
+    - [Interaction Component](/interactions.md/#412-interaction-component)
+- [Pull Grab](/interactions.md/#42-pull-grab)
 
 ## 3. VR Physics Hands
+
+---
+
+### _Table of Contents_
+---
+>:raised_hand: [Overview of VR Physics Hands](#30-Overview-of-VR-Physics-Hands)
+
+>:gloves: [Custom Hand Mesh](#31-How-to-change-the-hand-skeletal-mesh-to-a-custom-hand-mesh?)
+
+>:raised_hand: [Custom Hand Animations](#31-How-to-change-the-default-hand-animations?)
+
+---
+
 
 In this section we will give an overview how the physics hand work in LIFVR and how to change the hand mesh and default animations to custom ones.
 
