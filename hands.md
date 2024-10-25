@@ -14,11 +14,11 @@ There is explained how to setup grabable objects, fixed grab poses and animation
 
 ### _Table of Contents_
 ---
->:raised_hand: [Overview of VR Physics Hands](#30-Overview-of-VR-Physics-Hands)
+>:running: [Overview of VR Physics Hands](#30-Overview-of-VR-Physics-Hands)
 
->:gloves: [Custom Hand Mesh](#31-How-to-change-the-hand-skeletal-mesh-to-a-custom-hand-mesh?)
+>:gloves: [Custom Hand Mesh](#31-How-to-change-the-hand-skeletal-mesh-to-a-custom-hand-mesh)
 
->:raised_hand: [Custom Hand Animations](#31-How-to-change-the-default-hand-animations?)
+>:raised_hand: [Custom Hand Animations](#31-How-to-change-the-default-hand-animations)
 
 ---
 
@@ -35,8 +35,8 @@ The base parent class of all hands ios the VR_Hands class (BP_VR_Hands). This ha
 How the hands work: pd switch, strength switch, collisions,
 - switching hand poses: function explenation 
 
-### 3.1 How to change the hand skeletal mesh to a custom hand mesh?
+### 3.1 How to change the hand skeletal mesh to a custom hand mesh
 How to change the VR hands from the default quinn hands ... .
 
-### 3.2 How to change the default hand animations?
+### 3.2 How to change the default hand animations
 How to change the default hand animations...
