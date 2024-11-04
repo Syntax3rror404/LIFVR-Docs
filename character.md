@@ -174,6 +174,8 @@ Locomotion quick links:
 
 * [Moving](#moving) 
 
+* [Teleportation](#teleportation) 
+
 * [Turning](#turning)
 
 * [Jumping](#jumping)
@@ -261,6 +263,75 @@ For logical locomotion mode with logical movement you can set directly the speed
 You can access the current speed and velocity vector of the character with the following functions:
 
 <img src="./images/SpeedMethods.png" style="width: 60%;">
+
+#### Teleportation 
+------------------------
+
+Additionally to smooth movement the HexaCharacter can use teleportation. 
+
+You can choose between the following General Movement Mode:
+
+- SmoothWalking:  only smooth walking enabled, no teleportation allowed
+- Teleporting: only teleportation allowed, no smooth walking
+- Both: smooth walking and teleportation enabled
+
+To explore the different modes you can switch them in the main menu under the character page.
+The general movement modes can be switched in runtime. So you can for example start with only smooth walking allowed and learn teleport in gameplay, simply change the value of the `GeneralMovementMode` variable in the HexaCharacter.
+
+
+Default controls for smooth walking and teleportation based on the general movement mode: 
+
+| General Movement Mode | Walking Inputs                            | Teleporting Inputs                                         |
+|-----------------------|-------------------------------------------|------------------------------------------------------------|
+| **SmoothWalking**     | Left thumbstick up/down                   | ------                                                     |
+| **Teleporting**       | ------                                    | Left thumbstick up hold (search) and release (teleport)    |
+| **Both**              | Left thumbstick up/down                   | Right thumbstick press hold (search) and release (teleport)|
+
+
+**Teleportation mode**:
+
+LIFVR has two teleportation modes: 
+
+- Smooth Teleport
+- Instant Teleport
+
+In default the smooth teleport is used by the hexa character to navigate via teleportation. In smooth teleport mode the character is lerping to the new location. The instant teleportation mode directly teleports to a new location. This teleportation type is really useful for other teleportation usecases, like portals for example, in which the character should directly be teleported to a new location on a map/level. 
+
+Two teleport the character manually you can use the `TeleportHexaCharacter()` node /function. The new location and rotation should be given in world space. To enable the manual rotation, the `RotateCharacter` bool needs to be checked.
+
+<img src="./images/ManualTeleportNode.png" style="width: 70%;">
+
+> [!NOTE]
+> The `TeleportHexaCharacter()` function does no collision check if the location spot is valid, but simply teleports at the location defined.
+
+For teleportation with searching for a valid teleportation spot and only teleporting if a valid one is found, the following methods are used:
+
+<img src="./images/TeleportWithSearch.png" style="width: 60%;">
+
+The `TryTeleportHexaCharacter()` uses the teleportation mode defined in the `Teleport Mode` variable in the settings of the HexaCharacter.
+
+**Teleportation settings**:
+
+<img src="./images/TeleportSettings.png" style="width: 70%;">
+
+- With the teleportation height offset you can adjust the final height after teleporting. Normally you should not change this variable, but if you are using the Nav Mesh setting (only allowed to teleport on Nav Mesh) and have issue that the character teleport height does not fit to the nav mesh in your level you can try to adjust this variable.
+
+- `StopMovementOnDestination` (bool) : Removes all velocities of the character it had before teleportation.
+
+- `TeleportationTraceClass` : Here the actor class is defined for the teleportation trace. 
+
+- `Teleporting Only Hand` and `Teleporting Hand Both`: These varaibles define which hand should be used as starting point for the search trace. Based on the general movement mode (teleport only or both) this can change. If you are changing the inputs, you might have to adjust these vars based on your new input setup.
+
+- `Draw Teleport Debug`: You can enable to show a debug for the trace and location check. The debug shows the area which is checked for collisions to decide if it is a valid teleport location.
+
+**Teleportation visuals**:
+
+The visual effects for teleportation can be changed in`BP_TeleportationTrace`. In the Niagara component `TeleportationTraceViz` youcan define another Niagara effect for the teleportation trace. The Areavisualizer is a simple static mesh with a material, but you can add a niagaraeffect for this as well in the `TeleportationAreaViz` Niagara component.
+
+<img src="./images/TeleportVis.png" style="width: 55%;">
+<img src="./images/TraceViz.png" style="width: 55%;">
+
+
 
 #### Turning 
 ------------------------
