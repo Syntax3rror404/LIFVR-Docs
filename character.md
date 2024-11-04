@@ -308,7 +308,7 @@ Two teleport the character manually you can use the `TeleportHexaCharacter()` no
 
 For teleportation with searching for a valid teleportation spot and only teleporting if a valid one is found, the following methods are used:
 
-<img src="./images/TeleportWithSearch.png" style="width: 60%;">
+<img src="./images/TeleportWithSearch.png" style="width: 40%;">
 
 The `TryTeleportHexaCharacter()` uses the teleportation mode defined in the `Teleport Mode` variable in the settings of the HexaCharacter.
 
