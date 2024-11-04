@@ -42,6 +42,8 @@ The Hexa Character class acts as the manager for all related classes, such as sp
 
 ### 2.2 (Enhanced) Inputs and Mapping
 
+<img src="./images/ControlsLuminaV2.png" style="width: 75%;">
+
 The VR Controller Character handles the mapping from the enhanced input actions to the methods which should be called by them (eather in the VR Controller Character children classes or the LuminaVRMovementComponent).
 
 **Mapping Context**:
