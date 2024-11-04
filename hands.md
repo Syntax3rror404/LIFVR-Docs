@@ -162,4 +162,31 @@ switch the skeletal mesh in the SkeletalHandMesh Component.
 >Don't forget to change the hand classes (right/left) in the BP_HexaCharacter to the new hand blueprint with the custom mesh! (See: [Character](/character.md))
 
 ### 3.2 How to change the default hand animations
-How to change the default hand animations...
+
+The hand animations are defined in the dataset `DA_DefaultHandAnims` (child of HandAnimControlDA (C++ class)) in the content browser under `LIFVR Content/Animations/Hands/AnimationsData`. These animations are used for the default posing. You can duplicate this dataset and customize the animations with your own animations. For the posing with interaction points and solver the `DA_DefaultInteractionStaticAnims` dataset is used, if no custom static animation DA is defined in an interaction point. 
+
+How to use custom animations:
+-----
+
+1. **Data Asset: DA_DefaultHandAnims**:  Create a Data Asset (child of HandAnimControlDA) and define in there the hand animations (poses) you want to use. You only need to define the animations for the **Basic** and **StaticAnimation** grab type. 
+
+2. **Hand Animation Blueprint (ABP_VRHandAnimation)**: Change the dataset variable `AnimationData` in the hand animation blueprint: `ABP_VRHandAnimation` to your newly created Data Asset.  
+
+    <img src="./images/AnimationVarsHand.png" style="width: 55%;">
+
+------
+
+
+Default Hand Animation Data Asset (DA_DefaultHandAnims):
+------
+
+| Hand State Animation | Description                                                                       |
+|----------------------|-----------------------------------------------------------------------------------|
+| **Opened**           | Animation if touch inputs of controller buttons or thumbsticks are triggered       |
+| **Idle**             | Animation if no controller input                                                  |
+| **Grabbed**          | Animation if fully triggered trigger and grip buttons                             |
+| **Loose Grabbing**   | Additional animation which can be used for custom modes to have more control over loose grabbing (not used in default mode) |
+| **Grasping**         | Animation if possible to grab an object                                           |
+
+
+<img src="./images/DADefaultHandAnims.png" style="width: 90%;">
