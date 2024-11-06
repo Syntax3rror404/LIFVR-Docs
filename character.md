@@ -277,7 +277,7 @@ You can choose between the following General Movement Mode:
 - Teleporting: only teleportation allowed, no smooth walking
 - Both: smooth walking and teleportation enabled
 
-To explore the different modes you can switch them in the main menu under the character page.
+To explore the different modes you can switch them in the main menu under the **controls page**.
 The general movement modes can be switched in runtime. So you can for example start with only smooth walking allowed and learn teleport in gameplay, simply change the value of the `GeneralMovementMode` variable in the HexaCharacter.
 
 
